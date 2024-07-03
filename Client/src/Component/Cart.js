@@ -18,7 +18,7 @@ export default function Cart() {
   const getorderdata = async () => {
     try {
       const response = await axios.get(
-        "http://api.healinggarden.co.in/api/order/getallorder"
+        "https://api.healinggarden.co.in/api/order/getallorder"
       );
       const date = new Date();
 

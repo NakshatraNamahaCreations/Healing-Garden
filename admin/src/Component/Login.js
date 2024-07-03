@@ -81,8 +81,8 @@ function Login() {
             Login
           </Button>
         </div>
-        OR
-        <p
+        {/* OR */}
+        {/* <p
           style={{
             fontSize: "12px",
             marginTop: "10px",
@@ -90,7 +90,7 @@ function Login() {
           }}
         >
           <Link to="/register">Signup.</Link>
-        </p>
+        </p> */}
       </div>
     </div>
   );

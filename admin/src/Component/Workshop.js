@@ -723,7 +723,7 @@ export default function Workshop() {
                 src={
                   ViewImage
                     ? ViewImage
-                    : `http://api.healinggarden.co.in/Product/${EditWrokshop?.WorkshopImage}`
+                    : `https://api.healinggarden.co.in/Product/${EditWrokshop?.WorkshopImage}`
                 }
                 alt="Uploaded"
                 height={200}
@@ -742,7 +742,7 @@ export default function Workshop() {
                     className="row p-0 m-0 rounded"
                     height={100}
                     width={150}
-                    src={`http://api.healinggarden.co.in/Product/${Ele}`}
+                    src={`https://api.healinggarden.co.in/Product/${Ele}`}
                   />
                 </div>
               );

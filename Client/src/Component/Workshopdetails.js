@@ -15,7 +15,7 @@ export default function Workshopdetails() {
 
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/workshop/getallProduct"
+      "https://api.healinggarden.co.in/api/workshop/getallProduct"
     );
     let filteredData = response.data.data.find(
       (ele) => ele?._id === idd
@@ -25,7 +25,7 @@ export default function Workshopdetails() {
 
   const getAllCategory = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/category/getcategory"
+      "https://api.healinggarden.co.in/api/category/getcategory"
     );
     let filreddata = response.data.data.find((ele) => ele?._id === workshopDetails?.category)
     console.log(filreddata, "filreddata")
@@ -47,7 +47,7 @@ export default function Workshopdetails() {
           className="row m-auto"
           width={500}
           height={500}
-          src={`http://api.healinggarden.co.in/Product/${workshopDetails?.WorkshopImages?.[0]}`}
+          src={`https://api.healinggarden.co.in/Product/${workshopDetails?.WorkshopImages?.[0]}`}
         />
 
 

@@ -27,7 +27,7 @@ function RequestProposal() {
   const handlRequestSubmit = async () => {
     try {
       let config = {
-        url: "http://api.healinggarden.co.in/api/proposal/addproposal",
+        url: "https://api.healinggarden.co.in/api/proposal/addproposal",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {
@@ -58,7 +58,7 @@ function RequestProposal() {
 
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/workshop/getallProduct"
+      "https://api.healinggarden.co.in/api/workshop/getallProduct"
     );
     setWorkshop(response.data.data);
   };

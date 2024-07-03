@@ -1,2 +1,2 @@
-export const ApiURL = "http://api.healinggarden.co.in/api";
-export const ImageApiURL = "http://api.healinggarden.co.in";
+export const ApiURL = "https://api.healinggarden.co.in/api";
+export const ImageApiURL = "https://api.healinggarden.co.in";

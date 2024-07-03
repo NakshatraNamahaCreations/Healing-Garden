@@ -56,7 +56,7 @@ export default function View() {
   const [OrderData, setOrderData] = useState([]);
   const getAllCategory = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/category/getcategory"
+      "https://api.healinggarden.co.in/api/category/getcategory"
     );
     let FilterData = response.data.data.find(
       (ele) => ele._id === data?.item?.category
@@ -65,14 +65,14 @@ export default function View() {
   };
   const getorderdata = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/order/getallorder"
+      "https://api.healinggarden.co.in/api/order/getallorder"
     );
     setOrderData(response.data.data);
   };
 
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/workshop/getallProduct"
+      "https://api.healinggarden.co.in/api/workshop/getallProduct"
     );
     setWorkshop(response.data.data);
   };
@@ -209,7 +209,7 @@ export default function View() {
       let orderId = generateOrderId("HG", OrderData);
 
       let config = {
-        url: "http://api.healinggarden.co.in/api/order/addorder",
+        url: "https://api.healinggarden.co.in/api/order/addorder",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {
@@ -254,7 +254,7 @@ export default function View() {
           <img
             className="row m-auto viewimg p-0"
             height={350}
-            src={`http://api.healinggarden.co.in/Product/${data?.item.WorkshopImages?.[0]}`}
+            src={`https://api.healinggarden.co.in/Product/${data?.item.WorkshopImages?.[0]}`}
           />
           <div className="row m-auto mt-2">
             <div className="col-md-1"></div>
@@ -419,7 +419,7 @@ export default function View() {
                     <img
                       className="col-md-12 p-0 m-0 indi_img"
                       height={150}
-                      src={`http://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
                       // onClick={() => handleBook(Ele)}
                     />
                     <p className="individualtext p-2 m-0 text-center">
@@ -462,7 +462,7 @@ export default function View() {
                     <img
                       className="col-md-12 p-0 m-0 indi_img"
                       height={150}
-                      src={`http://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
                       // onClick={() => handleBook(Ele)}
                     />
                     <p className="individualtext p-2 m-0 text-center">

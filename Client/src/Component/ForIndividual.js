@@ -46,14 +46,14 @@ export default function ForIndividual() {
 
   const getAllCategory = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/category/getcategory"
+      "https://api.healinggarden.co.in/api/category/getcategory"
     );
     setcategoryData(response.data.data);
   };
 
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/workshop/getallProduct"
+      "https://api.healinggarden.co.in/api/workshop/getallProduct"
     );
     let filteredData = response.data.data.filter((ele) => ele.Live === true);
     setWorkshop(filteredData);
@@ -338,7 +338,7 @@ export default function ForIndividual() {
                     <img
                       className="col-md-12 p-0 m-0 indi_img"
                       height={150}
-                      src={`http://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
                       onClick={() => handleView(Ele)}
                     />
                     <p className="individualtext p-2 m-0">

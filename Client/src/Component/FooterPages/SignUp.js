@@ -26,7 +26,7 @@ function Signup() {
     }
     try {
       let config = {
-        url: "http://api.healinggarden.co.in/api/user/adduser",
+        url: "https://api.healinggarden.co.in/api/user/adduser",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {
@@ -55,25 +55,16 @@ function Signup() {
   };
 
   return (
-    <div className="login-container ">
-      <div className="right-side">
-        <div className="row m-auto text-center shadow p-4">
-          <h4 className="mt-3 ">Register</h4>
-          <div className="inputlogin ">
-            <div
-              class="input-group mb-4 mt-3"
-              style={{ display: "block", width: "100%" }}
-            >
+    <div className="row m-auto mt-2 p-5">
+      <div className="col-md-4 m-auto login-container ">
+        <div className="right-side">
+          <div className="row m-auto text-center shadow p-4">
+            <h4 className="mt-3 ">Register</h4>
+            <div className="inputlogin ">
               <Form.Select
                 type="text"
-                className="form-control"
+                className="form-control mb-3"
                 placeholder="Name"
-                style={{
-                  width: "60%",
-                  marginLeft: "20%",
-                  borderRadius: "3px",
-                  marginTop: "10px",
-                }}
                 name="usertype"
                 value={FormData.usertype}
                 onChange={handleChange}
@@ -83,14 +74,8 @@ function Signup() {
               </Form.Select>
               <Form.Control
                 type="text"
-                className="form-control"
+                className="form-control mb-3"
                 placeholder="Email"
-                style={{
-                  width: "60%",
-                  marginLeft: "20%",
-                  borderRadius: "3px",
-                  marginTop: "10px",
-                }}
                 name="email"
                 value={FormData.email}
                 onChange={handleChange}
@@ -99,11 +84,6 @@ function Signup() {
                 type="password"
                 className="form-control mt-4"
                 placeholder="Password"
-                style={{
-                  width: "60%",
-                  marginLeft: "20%",
-                  borderRadius: "3px",
-                }}
                 name="password"
                 value={FormData.password}
                 onChange={handleChange}
@@ -112,33 +92,27 @@ function Signup() {
                 type="text"
                 className="form-control mt-4"
                 placeholder="Confirm Password"
-                style={{
-                  width: "60%",
-                  marginLeft: "20%",
-                  borderRadius: "3px",
-                }}
                 name="phone"
                 value={FormData.phone}
                 onChange={handleChange}
               />
             </div>
-          </div>
 
-          <div className="text-center pt-3">
-            <Button
-              style={{
-                width: "200px",
-                padding: "4px",
-                backgroundColor: "#10b981",
-                border: "none",
-                fontWeight: "bold",
-              }}
-              onClick={handleRegister}
-            >
-              Signup
-            </Button>
-          </div>
-          {/* <p
+            <div className="text-center pt-3">
+              <Button
+                style={{
+                  width: "200px",
+                  padding: "4px",
+                  backgroundColor: "#10b981",
+                  border: "none",
+                  fontWeight: "bold",
+                }}
+                onClick={handleRegister}
+              >
+                Signup
+              </Button>
+            </div>
+            {/* <p
             style={{
               fontSize: "12px",
               marginTop: "10px",
@@ -147,6 +121,7 @@ function Signup() {
           >
             <b>Never share your login details with anyone.</b>
           </p> */}
+          </div>
         </div>
       </div>
     </div>

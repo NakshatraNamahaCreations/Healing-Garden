@@ -23,7 +23,7 @@ export default function Home() {
 
   const getAllCategory = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/category/getcategory"
+      "https://api.healinggarden.co.in/api/category/getcategory"
     );
 
     setcategoryData(response.data.data);
@@ -113,7 +113,7 @@ export default function Home() {
                       className="row category_img p-2 m-auto"
                       height={100}
                       width={100}
-                      src={`http://api.healinggarden.co.in/Category/${Ele?.categoryImage}`}
+                      src={`https://api.healinggarden.co.in/Category/${Ele?.categoryImage}`}
                     />
                     <p className="categorytext col-md-5 m-auto ">{Ele.category}</p>
                   </Link>

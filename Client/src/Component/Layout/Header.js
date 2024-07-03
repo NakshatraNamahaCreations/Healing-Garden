@@ -26,7 +26,7 @@ export default function Header() {
   }, []);
   const getAllCategory = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/category/getcategory"
+      "https://api.healinggarden.co.in/api/category/getcategory"
     );
     setcategoryData(response.data.data);
   };
@@ -50,7 +50,7 @@ export default function Header() {
   const handlRequestSubmit = async () => {
     try {
       let config = {
-        url: "http://api.healinggarden.co.in/api/proposal/addproposal",
+        url: "https://api.healinggarden.co.in/api/proposal/addproposal",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {
@@ -84,7 +84,7 @@ export default function Header() {
 
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/workshop/getallProduct"
+      "https://api.healinggarden.co.in/api/workshop/getallProduct"
     );
     setWorkshop(response.data.data);
   };

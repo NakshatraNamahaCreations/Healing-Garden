@@ -12,7 +12,7 @@ function Login() {
   const Login = async () => {
     try {
       let config = {
-        url: "http://api.healinggarden.co.in/api/user/loginuser",
+        url: "https://api.healinggarden.co.in/api/user/loginuser",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {

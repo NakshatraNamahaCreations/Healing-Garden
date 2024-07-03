@@ -21,7 +21,7 @@ export default function CategoryWiev() {
   
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "http://api.healinggarden.co.in/api/workshop/getallProduct"
+      "https://api.healinggarden.co.in/api/workshop/getallProduct"
     );
     let filteredData = response.data.data.filter((ele) => ele.category == idd);
     console.log(filteredData, "filteredData");
@@ -101,7 +101,7 @@ export default function CategoryWiev() {
                         borderRadius: "40px",
                         border: "5px solid #a77a43",
                       }}
-                      src={`http://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
                     />
 
                     <p className="col-md-8 m-auto sub_heading p-3 ">
@@ -177,7 +177,7 @@ export default function CategoryWiev() {
                     <img
                       className="row category_img category_img1 m-auto p-2 "
                       height={100}
-                      src={`http://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
                     />
                     <p className="col-md-6 m-auto sub_heading fs-15 p-3t ">
                       {Ele.workshopTitle}

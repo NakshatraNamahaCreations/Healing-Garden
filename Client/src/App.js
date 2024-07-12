@@ -28,6 +28,7 @@ import Login from "./Component/FooterPages/Login";
 
 import Signup from "./Component/FooterPages/SignUp";
 import RazoPay from "./Component/Razopya";
+import RequestProposal from "./Component/Request";
 // import Category from "./Component/Layout/Category";
 
 function App() {
@@ -64,7 +65,7 @@ function App() {
             </Layout>
           }
         />
-        
+
         <Route
           path="Workshopdetails"
           element={
@@ -190,7 +191,7 @@ function App() {
           }
         />
         <Route
-          path="galary"
+          path="gallery"
           element={
             <Layout>
               <Header />
@@ -249,12 +250,22 @@ function App() {
             </Layout>
           }
         />
-          <Route
+        <Route
           path="rezopay"
           element={
             <Layout>
               <Header />
               <RazoPay />
+              <Footer />
+            </Layout>
+          }
+        />
+          <Route
+          path="request"
+          element={
+            <Layout>
+              <Header />
+              <RequestProposal />
               <Footer />
             </Layout>
           }

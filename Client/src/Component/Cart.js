@@ -7,7 +7,7 @@ export default function Cart() {
   const [OrderData, setOrderData] = useState(null);
   const userDataStr = localStorage.getItem("userdata");
   const userid = JSON.parse(userDataStr)?._id;
-
+  const [AllOrderData, setAllOrderData] = useState([]);
   useEffect(() => {
     if (userid) {
       getorderdata();
@@ -21,8 +21,7 @@ export default function Cart() {
         "https://api.healinggarden.co.in/api/order/getallorder"
       );
       const date = new Date();
-
-      // Find the order for the current user and today's date
+      setAllOrderData(response.data.data);
       const data = response.data.data
         .filter(
           (ele) =>
@@ -35,7 +34,6 @@ export default function Cart() {
     }
   };
 
-  // Function to check if two dates are on the same day
   const isSameDay = (date1, date2) =>
     date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
@@ -55,86 +53,177 @@ export default function Cart() {
           </a>{" "}
         </p>
       </div>
-      <div className="row m-auto p-2 shadow-sm">
-        <p className="about-us sourc text-center">Order Confirmation</p>
-      </div>
-      <div className="container m-auto p-2">
-        <p className="about-us sourc">Thank you for placing the order!</p>
-        <p className="sub_heading textbold">Order Details:</p>
-        <div className="row">
-          <div className="col-md-2">
-            <p className="text_light m-auto">Day of Booking:</p>
-            <p className="text_light m-auto">
-              <Moment format="Do MMMM YYYY">{OrderData?.createdAt}</Moment>
-            </p>
-          </div>
-          <div className="col-md-2">
-            <p className="text_light m-auto">Booking ID:</p>
-            <p className="text_light m-auto">{OrderData?.OrderID}</p>
-          </div>
-        </div>
-        <div className="row mt-5">
-          <div className="col-md-3">
-            <img
-              src="./workshop/abot4.jpeg"
-              className="row "
-              style={{ borderRadius: "15px" }}
-              height={120}
-              alt=""
-            />
-          </div>
-          <div className="col-md-6">
-            <p>
-              <span className="textbold">Workshop/Session : </span>
-              <span className="textbold">
-                {OrderData?.OrderDetails?.item?.workshopTitle}{" "}
-                {OrderData?.OrderDetails?.item?.sessionAddress}
-              </span>
-            </p>
-            <p className="text_light">
-              <Moment format="ddd, Do MMMM YYYY | hh:mm A">
-                {OrderData?.OrderDetails?.SelectedDate}
-              </Moment>{" "}
-              -{" "}
-              <Moment
-                add={{ minutes: OrderData?.OrderDetails?.duration }}
-                format="hh:mm A"
-              >
-                {OrderData?.OrderDetails?.startTime}
-              </Moment>
-            </p>
-            <div>
-              <p className="textbold m-auto">Ticket-2 : </p>
-              <span className="textbold">
-                Total Amount - Rs. {OrderData?.OrderDetails?.item?.OfferPrice}{" "}
-                (Including taxes)
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="row mt-5 ">
-          <div className="col-md-8 address p-3">
-            <div className="row">
-              <div className="col-md-6">
-                <p className="textbold">Registered address:</p>
-              </div>
-              <div className="col-md-6">
-                <p className="textbold">GSTIN: 29AYVPS1501R2ZF</p>
-              </div>
-            </div>
 
+      {OrderData ? (
+        <>
+          <div className="row m-auto p-2 shadow-sm">
+            <p className="about-us sourc text-center">Order Confirmation</p>
+          </div>
+          <div className="container m-auto p-2">
+            <p className="about-us sourc">Thank you for placing the order!</p>
+            <p className="sub_heading textbold">Order Details:</p>
             <div className="row">
-              <div className="col-md-8">
-                <p className="text_light m-auto">Healing Garden</p>
+              <div className="col-md-2">
+                <p className="text_light m-auto">Day of Booking:</p>
                 <p className="text_light m-auto">
-                  Brigade Buena Vista, Old Madras Road, Bangalore-560049
+                  <Moment format="Do MMMM YYYY">{OrderData?.createdAt}</Moment>
                 </p>
               </div>
+              <div className="col-md-2">
+                <p className="text_light m-auto">Booking ID:</p>
+                <p className="text_light m-auto">{OrderData?.OrderID}</p>
+              </div>
+            </div>
+            <div className="row mt-5">
+              <div className="col-md-3">
+                <img
+                  src={OrderData?.OrderDetails.WorkshopImages[0]}
+                  className="row "
+                  style={{ borderRadius: "15px" }}
+                  height={120}
+                  alt=""
+                />
+              </div>
+              <div className="col-md-6">
+                <p>
+                  <span className="textbold">Workshop/Session : </span>
+                  <span className="textbold">
+                    {OrderData?.OrderDetails?.item?.workshopTitle}{" "}
+                    {OrderData?.OrderDetails?.item?.sessionAddress}
+                  </span>
+                </p>
+                <p className="text_light">
+                  <Moment format="ddd, Do MMMM YYYY | hh:mm A">
+                    {OrderData?.OrderDetails?.SelectedDate}
+                  </Moment>{" "}
+                  -{" "}
+                  <Moment
+                    add={{ minutes: OrderData?.OrderDetails?.duration }}
+                    format="hh:mm A"
+                  >
+                    {OrderData?.OrderDetails?.startTime}
+                  </Moment>
+                </p>
+                <div>
+                  <p className="textbold m-auto">Ticket-2 : </p>
+                  <span className="textbold">
+                    Total Amount - Rs.{" "}
+                    {OrderData?.OrderDetails?.item?.OfferPrice} (Including
+                    taxes)
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-5 ">
+              <div className="col-md-8 address p-3">
+                <div className="row">
+                  <div className="col-md-6">
+                    <p className="textbold">Registered address:</p>
+                  </div>
+                  <div className="col-md-6">
+                    <p className="textbold">GSTIN: 29AYVPS1501R2ZF</p>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-8">
+                    <p className="text_light m-auto">Healing Garden</p>
+                    <p className="text_light m-auto">
+                      Brigade Buena Vista, Old Madras Road, Bangalore-560049
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4"></div>
             </div>
           </div>
-          <div className="col-md-4"></div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <>
+          {AllOrderData.map((order) => {
+            console.log(order, "order");
+            return (
+              <div className="row m-auto">
+                <div className="row">
+                  <div className="col-md-2">
+                    <p className="text_light m-auto">Day of Booking:</p>
+                    <p className="text_light m-auto">
+                      <Moment format="Do MMMM YYYY">{order?.createdAt}</Moment>
+                    </p>
+                  </div>
+                  <div className="col-md-2">
+                    <p className="text_light m-auto">Booking ID:</p>
+                    <p className="text_light m-auto">{order?.OrderID}</p>
+                  </div>
+                </div>
+                <div className="row mt-5">
+                  <div className="col-md-3">
+                    <img
+                      src={`https://api.healinggarden.co.in/Product/${order?.OrderDetails?.item?.WorkshopImages?.[0]}`}
+                      className="row "
+                      style={{ borderRadius: "15px" }}
+                      height={120}
+                      width={250}
+                      alt=""
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <p>
+                      <span className="textbold">Workshop/Session : </span>
+                      <span className="textbold">
+                        {order?.OrderDetails?.item?.workshopTitle}{" "}
+                        {order?.OrderDetails?.item?.sessionAddress}
+                      </span>
+                    </p>
+                    <p className="text_light">
+                      <Moment format="ddd, Do MMMM YYYY | hh:mm A">
+                        {order?.OrderDetails?.SelectedDate}
+                      </Moment>{" "}
+                      -{" "}
+                      <Moment
+                        add={{ minutes: order?.OrderDetails?.duration }}
+                        format="hh:mm A"
+                      >
+                        {order?.OrderDetails?.startTime}
+                      </Moment>
+                    </p>
+                    <div>
+                      <p className="textbold m-auto">Ticket-2 : </p>
+                      <span className="textbold">
+                        Total Amount - Rs.{" "}
+                        {order?.OrderDetails?.item?.OfferPrice} (Including
+                        taxes)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="row mt-5 ">
+                  <div className="col-md-8 address p-3">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <p className="textbold">Registered address:</p>
+                      </div>
+                      <div className="col-md-6">
+                        <p className="textbold">GSTIN: 29AYVPS1501R2ZF</p>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-8">
+                        <p className="text_light m-auto">Healing Garden</p>
+                        <p className="text_light m-auto">
+                          Brigade Buena Vista, Old Madras Road, Bangalore-560049
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4"></div>
+                </div>
+              </div>
+            );
+          })}
+        </>
+      )}
     </>
   );
 }

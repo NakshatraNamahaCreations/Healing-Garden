@@ -57,40 +57,32 @@ export default function Header() {
               <Nav.Link href="/about" className="ms-2">
                 About
               </Nav.Link>
-              <Nav.Link className="ms-2 p-0 m-0">
-                <NavDropdown
-                  title="Workshops"
-                  className=""
-                  id="collapsible-nav-dropdown"
-                >
-                  {categoryData.map((ele) => (
-                    <NavDropdown.Item>
-                      {" "}
-                      <Link
-                        className="linktype"
-                        state={{ category: ele.category, idd: ele._id }}
-                        to="/workshop"
-                      >
-                        {ele.category}
-                      </Link>{" "}
-                    </NavDropdown.Item>
-                  ))}
-                </NavDropdown>
-              </Nav.Link>
-
+              <NavDropdown title="Workshops" id="collapsible-nav-dropdown">
+                {categoryData.map((ele) => (
+                  <NavDropdown.Item>
+                    {" "}
+                    <Link
+                      className="linktype"
+                      state={{ category: ele.category, idd: ele._id }}
+                      to="/workshop"
+                    >
+                      {ele.category}
+                    </Link>{" "}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
               <Nav.Link href="/gallery" className="ms-2">
                 Gallery
               </Nav.Link>
               <Nav.Link href="individual" className="ms-2">
                 For Individual
               </Nav.Link>
-
-              <Nav.Link className="ms-2 p-0 m-0">
-                <NavDropdown
-                  title="More"
-                  id="navbarScrollingDropdown"
-                ></NavDropdown>
-              </Nav.Link>
+              <NavDropdown title="More" id="navbarScrollingDropdown">
+                {/* <NavDropdown.Item href="">Action</NavDropdown.Item>
+                <NavDropdown.Item href="">Another action</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="">Something else here</NavDropdown.Item> */}
+              </NavDropdown>
               <Nav.Link href="/contact-us" className="ms-2">
                 Contact Us
               </Nav.Link>
@@ -98,14 +90,14 @@ export default function Header() {
             <Nav>
               <Nav.Link
                 onClick={() => setOpen(true)}
-                className="request-proposal  text-center p-2"
+                className="request-proposal m-auto text-center p-2"
               >
                 Request A Proposal
               </Nav.Link>
               <Nav.Link href="">
                 <IoCallOutline />
               </Nav.Link>
-              <Nav.Link eventKey={2} href="tel:+9620520200" className="ms-2">
+              <Nav.Link eventKey={2} href="">
                 9620520200
               </Nav.Link>
               <Nav.Link eventKey={2} href="/cart">

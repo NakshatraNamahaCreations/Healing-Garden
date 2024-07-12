@@ -77,12 +77,12 @@ function Sidenav() {
             {" "}
             Users
           </MenuItem> */}
-          {/* <MenuItem
+          <MenuItem
             component={<Link className="M-link" to="/OrderList" />}
             icon={<i className="pi pi-cart-plus"></i>}
           >
             Order
-          </MenuItem> */}
+          </MenuItem>
           {/* <MenuItem
             component={<Link className="M-link" to="/discount" />}
             icon={<i className="pi pi-wallet"></i>}

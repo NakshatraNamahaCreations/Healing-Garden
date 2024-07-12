@@ -27,10 +27,7 @@ export default function Categorylist() {
         <a className="footertext" href="/">
           Home
         </a>{" "}
-        {">"}{" "}
-        <a className="footertext" href="workshop">
-          Workshops
-        </a>
+        {">"} <a className="footertext">Workshops</a>
         {">"}{" "}
         <a className="footertext" href="categorylist">
           Categories

@@ -10,7 +10,6 @@ import { IoIosMail } from "react-icons/io";
 export default function About() {
   useEffect(() => {
     window.scrollTo(0, 0);
-    
   }, []);
   return (
     <>
@@ -35,8 +34,8 @@ export default function About() {
           {AboutBanner.map((Ele, index) => (
             <Carousel.Item>
               <img
-                className="col-md-12 p-0 PositionR"
-                height={430}
+                className="d-block w-100 PositionR"
+                height="100%"
                 src={`${Ele.img}`}
                 alt="banner"
               />
@@ -45,84 +44,71 @@ export default function About() {
         </Carousel>
       </div>
 
-      <div className="row mt-5 p-4  m-auto PositionR">
-        <div className="col-md-5 m-auto PositionR">
-          <img
-            src="./workshop/abot4.jpeg"
-            className="aboutImg"
-            width={450}
-            height={450}
-            alt=""
-          />
-          <img
-            className="about-grap"
-            alt=""
-            src="./workshop/HG asset 1.png"
-            height={600}
-          />
+      <div className="container">
+        <div className="row mt-5 p-4 m-auto PositionR">
+          <div className="col-md-5 col-12 m-auto PositionR">
+            <img src="./workshop/abot4.jpeg" className="aboutImg" alt="" />
+            <img
+              className="about-grap"
+              alt=""
+              src="./workshop/HG asset 1.png"
+            />
 
-          <img
-            className="about_svg3"
-            width={200}
-            height={200}
-            src="../Img/icons (16).png"
-          />
-          <img
-            className="about_svg4herat"
-            width={100}
-            height={100}
-            src="../Img/icons (15).png"
-          />
-        </div>
-
-        <img
-          className="about_svg1"
-          width={200}
-          height={200}
-          src="../wobjectives/Drawing-05.svg"
-        />
-
-        <div className="col-md-5 m-auto ">
-          <p className="main_heaidng">ABOUT US</p>
-
-          <img
-            className="about_svg2"
-            width={200}
-            height={200}
-            src="../Img/icons (9).png"
-          />
-
-          <p className="sub_heading ">
-            Healing Garden is dedicated to enhancing mental & social-wellness
-            through a diverse array of online & offline therapeutic
-            experiences,counselling & healing sessions.{" "}
-          </p>
-          <p className="sub_heading ">
-            We have a network of 70+ artists,therapists and relevant service
-            providers with whom we carefully curate activities in following
-            broad categories:
-          </p>
-          <div className="d-flex mt-4">
-            <div className="me-3 p-1  about-cate">Nature & Gardening</div>
-            <div className="p-1 about-cate">Art & Craft</div>
+            <img className="about_svg3" src="../Img/icons (16).png" alt="" />
+            <img
+              className="about_svg4herat"
+              src="../Img/icons (15).png"
+              alt=""
+            />
           </div>
-          <div className="d-flex mt-4">
-            <div className="col-md-6 me-2 p-1  about-cate">
-              Mindfulness & Healing{" "}
-            </div>
-            <div className="col-md-6  p-1 about-cate">
-              Curated Social Experiences{" "}
-            </div>
+
+          <div className="col-md-2 d-none d-md-block">
+            <img
+              className="about_svg1"
+              src="../wobjectives/Drawing-05.svg"
+              alt=""
+            />
           </div>
-          <div className="d-flex mt-4">
-            <div className="col-md-6 p-1  about-cate">
-              Life-Coaching & Counselling{" "}
+
+          <div className="col-md-5 col-12 m-auto ">
+            <p className="main_heaidng">ABOUT US</p>
+
+            <img className="about_svg2" src="../Img/icons (9).png" alt="" />
+
+            <p className="sub_heading">
+              Healing Garden is dedicated to enhancing mental & social-wellness
+              through a diverse array of online & offline therapeutic
+              experiences, counselling & healing sessions.
+            </p>
+            <p className="sub_heading">
+              We have a network of 70+ artists, therapists and relevant service
+              providers with whom we carefully curate activities in following
+              broad categories:
+            </p>
+            <div className="d-flex mt-4">
+              <div className="me-3 p-1 col-6 about-cate">
+                Nature & Gardening
+              </div>
+              <div className="p-1 col-6 about-cate">Art & Craft</div>
+            </div>
+            <div className="d-flex mt-4">
+              <div className="col-md-6 me-2 col-6 p-1 about-cate">
+                Mindfulness & Healing{" "}
+              </div>
+              <div className="col-md-7 col-6  p-1 about-cate">
+                Curated Social Experiences{" "}
+              </div>
+            </div>
+            <div className="d-flex mt-4">
+              <div className="col-md-7 col-12 p-1 about-cate">
+                Life-Coaching & Counselling{" "}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="row  m-auto about-us mt-5">
+      {/* <div className="row  m-auto about-us mt-5">
         <p className="main_heading text-center">WHAT WE DO</p>
         <div>
           <img
@@ -156,8 +142,8 @@ export default function About() {
             />
           </div>
         </div>
-      </div>
-      <div className="row mt-5 m-auto meet-founder ">
+      </div> */}
+      {/* <div className="row mt-5 m-auto meet-founder ">
         <div className="row p-5 meet-founder-content PositionR">
           <div className="col-md-4 ">
             <div className="row text-center">
@@ -233,9 +219,9 @@ export default function About() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="row mt-5 m-auto journy-so-far PositionR">
+      {/* <div className="row mt-5 m-auto journy-so-far PositionR">
         <p className="main_heading text-center">JOURNEY SO FAR</p>
         <div className="col-md-4 m-auto">
           <img
@@ -308,9 +294,9 @@ export default function About() {
             src="../Img/icons (14).png"
           />
         </div>
-      </div>
+      </div> */}
 
-      <div className="row mt-5 m-auto journy-so-far PositionR">
+      {/* <div className="row mt-5 m-auto journy-so-far PositionR">
         <p className="main_heading text-center">OUR APPROACH</p>
         <div className="row m-auto">
           <img
@@ -320,9 +306,9 @@ export default function About() {
             alt="HG asset 3"
           />
         </div>
-      </div>
+      </div> */}
 
-      <div className="row m-auto  PositionR">
+      {/* <div className="row m-auto  PositionR">
         <div>
           <img
             className="team-svg1"
@@ -357,8 +343,8 @@ export default function About() {
             src="../Img/icons (15).png"
           />
         </div>
-      </div>
-
+      </div> */}
+      {/* 
       <div className="row m-auto  PositionR">
         <img
           className="team-svg1"
@@ -384,8 +370,8 @@ export default function About() {
               <div className="row">
                 <p className="sub_heading textbold">Address:</p>
                 <p className="sub_heading textbold">
-                  Tower 2, Prestige Shantiniketan, ITPL Main Road,
-                  Whitefeild,Bangalore,India-560048
+                  Tower 2, PRESTIGE SHANTINIKETAN, ITPL Main Rd, Thigalarapalya,
+                  Whitefield, Bengaluru, Karnataka 560048
                 </p>
               </div>
               <div className="row">
@@ -397,10 +383,10 @@ export default function About() {
                 </p>
               </div>
             </div>
-            {/* <div className="col-md-6"> */}
+           
             <img className="col-md-4 m-auto" src="../Img/Address-bro.png" />
 
-            {/* </div> */}
+     
           </div>
           <img
             className="team-svg2"
@@ -409,7 +395,7 @@ export default function About() {
             src="../Img/icons (9).png"
           />
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

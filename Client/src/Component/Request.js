@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import { Form } from "react-bootstrap";
-// import "../login.css";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
 
-function RequestProposal() {
-  const [open, setOpen] = useState(false);
+function RequestProposal({ open, setOpen }) {
+  // const [open, setOpen] = useState(false);
 
   const [Workshop, setWorkshop] = useState([]);
   let initialdat = {
@@ -66,10 +63,21 @@ function RequestProposal() {
   return (
     <Modal show={open} onHide={() => setOpen(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Request Modal</Modal.Title>
+        <Modal.Title>Request Form</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label> Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="User name"
+              autoFocus
+              name="Username"
+              value={RequestData?.Username}
+              onChange={handleChange}
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Company name</Form.Label>
             <Form.Control
@@ -94,7 +102,7 @@ function RequestProposal() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Company Email</Form.Label>
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
               placeholder="Email"
@@ -124,7 +132,6 @@ function RequestProposal() {
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Select
-              size="lg"
               type="text"
               className="form-control"
               aria-describedby="basic-addon1"
@@ -132,7 +139,7 @@ function RequestProposal() {
               value={RequestData?.max}
               onChange={handleChange}
             >
-              <option>Select Max </option>
+              <option>Select Pax </option>
               <option value={"50-100"}>50-100 </option>
               <option value={"150-300"}>150-200 </option>
               <option value={"300-400"}>300-400 </option>
@@ -140,7 +147,7 @@ function RequestProposal() {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Example textarea</Form.Label>
+            <Form.Label>Message </Form.Label>
             <Form.Control
               value={RequestData.message}
               onChange={handleChange}

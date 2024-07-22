@@ -107,8 +107,7 @@ export default function About() {
           </div>
         </div>
       </div>
-
-      {/* <div className="row  m-auto about-us mt-5">
+      <div className="row  m-auto about-us mt-5">
         <p className="main_heading text-center">WHAT WE DO</p>
         <div>
           <img
@@ -142,8 +141,8 @@ export default function About() {
             />
           </div>
         </div>
-      </div> */}
-      {/* <div className="row mt-5 m-auto meet-founder ">
+      </div>
+      <div className="row mt-5 m-auto meet-founder ">
         <div className="row p-5 meet-founder-content PositionR">
           <div className="col-md-4 ">
             <div className="row text-center">
@@ -219,9 +218,9 @@ export default function About() {
             />
           </div>
         </div>
-      </div> */}
+      </div>
 
-      {/* <div className="row mt-5 m-auto journy-so-far PositionR">
+      <div className="row mt-5 m-auto journy-so-far PositionR">
         <p className="main_heading text-center">JOURNEY SO FAR</p>
         <div className="col-md-4 m-auto">
           <img
@@ -294,9 +293,9 @@ export default function About() {
             src="../Img/icons (14).png"
           />
         </div>
-      </div> */}
+      </div>
 
-      {/* <div className="row mt-5 m-auto journy-so-far PositionR">
+      <div className="row mt-5 m-auto journy-so-far PositionR">
         <p className="main_heading text-center">OUR APPROACH</p>
         <div className="row m-auto">
           <img
@@ -306,9 +305,9 @@ export default function About() {
             alt="HG asset 3"
           />
         </div>
-      </div> */}
+      </div>
 
-      {/* <div className="row m-auto  PositionR">
+      <div className="row m-auto  PositionR">
         <div>
           <img
             className="team-svg1"
@@ -343,8 +342,8 @@ export default function About() {
             src="../Img/icons (15).png"
           />
         </div>
-      </div> */}
-      {/* 
+      </div>
+
       <div className="row m-auto  PositionR">
         <img
           className="team-svg1"
@@ -383,10 +382,8 @@ export default function About() {
                 </p>
               </div>
             </div>
-           
-            <img className="col-md-4 m-auto" src="../Img/Address-bro.png" />
 
-     
+            <img className="col-md-4 m-auto" src="../Img/Address-bro.png" />
           </div>
           <img
             className="team-svg2"
@@ -395,7 +392,7 @@ export default function About() {
             src="../Img/icons (9).png"
           />
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

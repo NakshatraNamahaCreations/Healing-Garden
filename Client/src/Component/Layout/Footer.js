@@ -188,12 +188,22 @@ export default function Footer() {
               <div className="col-md-10 ">
                 {" "}
                 <div className=" d-flex ">
-                  <li className="list linktext m-auto">Terms & Condition </li>
+                  <li className="list linktext m-auto">
+                    <a href="/terms" className="anchortext">
+                      Terms & Condition
+                    </a>{" "}
+                  </li>
                   <li className="list linktext me-1">|</li>
-                  <li className="list linktext m-auto">Privacy Policy</li>
+                  <li className="list linktext m-auto">
+                    <a className="anchortext" href="privacy">
+                      Privacy Policy
+                    </a>
+                  </li>
                   <li className="list linktext  me-1">|</li>
                   <li className="list linktext m-auto">
-                    Cancellation & Refund
+                    <a className="anchortext" href="refund">
+                      Cancellation & Refund
+                    </a>
                   </li>
                   <li className="list linktext  me-1">|</li>
                   <li className="list linktext m-auto">

@@ -29,6 +29,9 @@ import Login from "./Component/FooterPages/Login";
 import Signup from "./Component/FooterPages/SignUp";
 import RazoPay from "./Component/Razopya";
 import RequestProposal from "./Component/Request";
+import Terms from "./Component/FooterPages/Terms";
+import PrivacyPolicy from "./Component/FooterPages/Privacy";
+import CancellationAndRefund from "./Component/FooterPages/Refund";
 // import Category from "./Component/Layout/Category";
 
 function App() {
@@ -221,15 +224,36 @@ function App() {
           }
         />
         <Route
-          path="volunteer"
+          path="terms"
           element={
             <Layout>
               <Header />
-              <Volunteer />
+              <Terms />
               <Footer />
             </Layout>
           }
         />
+        <Route
+          path="privacy"
+          element={
+            <Layout>
+              <Header />
+              <PrivacyPolicy />
+              <Footer />
+            </Layout>
+          }
+        />
+        <Route
+          path="refund"
+          element={
+            <Layout>
+              <Header />
+              <CancellationAndRefund />
+              <Footer />
+            </Layout>
+          }
+        />
+
         <Route
           path="login"
           element={
@@ -260,7 +284,7 @@ function App() {
             </Layout>
           }
         />
-          <Route
+        <Route
           path="request"
           element={
             <Layout>

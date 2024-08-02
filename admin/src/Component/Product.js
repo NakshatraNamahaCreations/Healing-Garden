@@ -299,7 +299,7 @@ export default function Workshop() {
       formdata.append("WorkshopSlots", JSON.stringify(selectedSlots));
       formdata.append("mode", JSON.stringify(Mode));
       let response = await http.put(
-        `/workshop/editProduct/${ProductID}`,
+        `/workshop/editworkshop/${ProductID}`,
         formdata,
         {
           headers: {

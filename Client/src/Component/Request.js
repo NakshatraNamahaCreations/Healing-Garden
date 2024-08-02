@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import { Form } from "react-bootstrap";
-
+import { Toaster, toast } from "react-hot-toast";
+import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
 function RequestProposal({ open, setOpen }) {
-  // const [open, setOpen] = useState(false);
+  // const [SuccesMessage, setSuccesMessage] = useState(false);
 
-  const [Workshop, setWorkshop] = useState([]);
   let initialdat = {
     companyname: "",
     mobileno: "",
@@ -17,14 +17,13 @@ function RequestProposal({ open, setOpen }) {
     max: "",
     message: "",
   };
+
   const [RequestData, setRequestData] = useState(initialdat);
-  useEffect(() => {
-    getAllWorkShop();
-  }, []);
+
   const handlRequestSubmit = async () => {
     try {
       let config = {
-        url: "https://api.healinggarden.co.in/api/proposal/addproposal",
+        url: "http://localhost:8002/api/proposal/addproposal",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {
@@ -39,12 +38,15 @@ function RequestProposal({ open, setOpen }) {
       let res = await axios(config);
 
       if (res.status === 200) {
-        alert("Request sent ");
+        setOpen(false);
+        // setSuccesMessage(true);
+        notify();
       }
     } catch (error) {
-      alert("An error occurred during login. Please try again.");
+      alert("An error occurred during submission. Please try again.");
     }
   };
+
   const handleChange = (e) => {
     let { value, name } = e.target;
     setRequestData((prev) => ({
@@ -53,43 +55,29 @@ function RequestProposal({ open, setOpen }) {
     }));
   };
 
-  const getAllWorkShop = async () => {
-    let response = await axios.get(
-      "https://api.healinggarden.co.in/api/workshop/getallProduct"
+  const notify = () =>
+    toast(
+      "Thank you for contacting us. We will reply to you shortly. Feel free to call/text on WhatsApp at 9620520200."
     );
-    setWorkshop(response.data.data);
-  };
 
   return (
-    <Modal show={open} onHide={() => setOpen(false)}>
-      <Modal.Header closeButton>
-        <Modal.Title>Request Form</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
+    <div className="row m-auto">
+      <Modal show={open} onHide={() => setOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Request A Proposal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label> Username</Form.Label>
+            <Form.Label>Full name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="User name"
-              autoFocus
-              name="Username"
-              value={RequestData?.Username}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Company name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="company name"
+              placeholder="Full name"
               autoFocus
               name="companyname"
               value={RequestData?.companyname}
               onChange={handleChange}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Mobile number</Form.Label>
             <Form.Control
@@ -102,9 +90,20 @@ function RequestProposal({ open, setOpen }) {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Company name</Form.Label>
             <Form.Control
               type="text"
+              placeholder="Company name"
+              autoFocus
+              name="companyname"
+              value={RequestData?.companyname}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Company email address</Form.Label>
+            <Form.Control
+              type="email"
               placeholder="Email"
               autoFocus
               name="email"
@@ -112,23 +111,16 @@ function RequestProposal({ open, setOpen }) {
               onChange={handleChange}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Select
-              type="text"
-              className="form-control"
-              aria-describedby="basic-addon1"
+            <Form.Label>Tentative Workshop Date</Form.Label>
+            <Form.Control
+              type="date"
+              placeholder="Tentative Workshop Date"
+              autoFocus
               name="workshop"
               value={RequestData?.workshop}
               onChange={handleChange}
-            >
-              <option>Select Workshop</option>
-              {Workshop?.map((ele) => {
-                return (
-                  <option value={ele.workshopTitle}>{ele.workshopTitle}</option>
-                );
-              })}
-            </Form.Select>
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Select
@@ -139,31 +131,36 @@ function RequestProposal({ open, setOpen }) {
               value={RequestData?.max}
               onChange={handleChange}
             >
-              <option>Select Pax </option>
-              <option value={"50-100"}>50-100 </option>
-              <option value={"150-300"}>150-200 </option>
-              <option value={"300-400"}>300-400 </option>
+              <option>Tentative Participant Count</option>
+              <option value={"20-50"}>20-50</option>
+              <option value={"50-100"}>50-100</option>
+              <option value={"100-200"}>100-200</option>
+              <option value={"200-300"}>200-300</option>
+              <option value={"300+"}>300+</option>
             </Form.Select>
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Message </Form.Label>
+            <Form.Label>Message</Form.Label>
             <Form.Control
-              value={RequestData.message}
-              onChange={handleChange}
               as="textarea"
               name="message"
               rows={3}
+              value={RequestData.message}
+              onChange={handleChange}
             />
           </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="filter row " onClick={handlRequestSubmit}>
-          Submit{" "}
-        </Button>
-      </Modal.Footer>
-    </Modal>
+        </Modal.Body>
+        <div className="row mb-4">
+          <Button
+            className="col-md-4 filter m-auto"
+            onClick={handlRequestSubmit}
+          >
+            Submit
+          </Button>
+        </div>
+      </Modal>
+      <Toaster position="top-center" reverseOrder={false} />
+    </div>
   );
 }
 

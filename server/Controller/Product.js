@@ -42,8 +42,6 @@ function escapeRegex(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
-
-
 exports.AddProduct = async (req, res) => {
   let {
     workshopTitle,
@@ -62,11 +60,18 @@ exports.AddProduct = async (req, res) => {
     YouTubeLink,
     Live,
     Pause,
-    OfferPrice, terms
+    OfferPrice,
+    terms,
+    clientType,
+    reasonToJoin,
+    primaryObjective,
+    SuitableFor,
+    Maxparticipant,
+    Minparticipant,
   } = req.body;
 
   const files = req.files;
-  const fileNames = files.map(file => file.filename);
+  const fileNames = files.map((file) => file.filename);
 
   try {
     const ProductData = new ProductModal({
@@ -86,8 +91,15 @@ exports.AddProduct = async (req, res) => {
       YouTubeLink,
       Live,
       Pause,
-      OfferPrice, terms,
-      WorkshopImages: fileNames
+      OfferPrice,
+      terms,
+      clientType,
+      reasonToJoin,
+      primaryObjective,
+      SuitableFor,
+      Maxparticipant,
+      Minparticipant,
+      WorkshopImages: fileNames,
     });
 
     const savedProduct = await ProductData.save();
@@ -95,16 +107,13 @@ exports.AddProduct = async (req, res) => {
     if (savedProduct) {
       return res
         .status(200)
-        .json({ message: 'Workshop Added Successfully', savedProduct });
+        .json({ message: "Workshop Added Successfully", savedProduct });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal error' });
+    return res.status(500).json({ message: "Internal error" });
   }
 };
-
-
-
 
 exports.getAllProduct = async (req, res) => {
   try {
@@ -164,7 +173,8 @@ exports.getByUserid = async (req, res) => {
 exports.update = async (req, res) => {
   let {
     workshopTitle,
-    category, terms,
+    category,
+    terms,
     mode,
     city,
     subLocation,
@@ -179,18 +189,31 @@ exports.update = async (req, res) => {
     YouTubeLink,
     Live,
     Pause,
-    OfferPrice
+    OfferPrice,
+    clientType,
+    reasonToJoin,
+    primaryObjective,
+    SuitableFor,
+    Maxparticipant,
+    Minparticipant,
   } = req.body;
   const files = req.files;
-  const fileNames = files.map(file => file.filename);
+  const fileNames = files.map((file) => file.filename);
 
   try {
-
     let idd = req.params.id;
     const findProduct = await ProductModal.findOne({ _id: idd });
     if (!findProduct) {
       return res.json({ error: "No such record found" });
     }
+
+    findProduct.Minparticipant = Minparticipant || findProduct.Minparticipant;
+    findProduct.Maxparticipant = Maxparticipant || findProduct.Maxparticipant;
+    findProduct.clientType = clientType || findProduct.clientType;
+    findProduct.reasonToJoin = reasonToJoin || findProduct.reasonToJoin;
+    findProduct.primaryObjective =
+      primaryObjective || findProduct.primaryObjective;
+    findProduct.SuitableFor = SuitableFor || findProduct.SuitableFor;
 
     findProduct.terms = terms || findProduct.terms;
     findProduct.workshopTitle = workshopTitle || findProduct.workshopTitle;
@@ -198,7 +221,8 @@ exports.update = async (req, res) => {
     findProduct.city = city || findProduct.city;
     findProduct.subLocation = subLocation || findProduct.subLocation;
     findProduct.sessionAddress = sessionAddress || findProduct.sessionAddress;
-    findProduct.WFeePerParticipant = WFeePerParticipant || findProduct.WFeePerParticipant;
+    findProduct.WFeePerParticipant =
+      WFeePerParticipant || findProduct.WFeePerParticipant;
     findProduct.language = language || findProduct.language;
     findProduct.gMapDirection = gMapDirection || findProduct.gMapDirection;
     findProduct.discription = discription || findProduct.discription;
@@ -207,25 +231,28 @@ exports.update = async (req, res) => {
     findProduct.Live = Live !== undefined ? Live : findProduct.Live;
     findProduct.Pause = Pause !== undefined ? Pause : findProduct.Pause;
     findProduct.OfferPrice = OfferPrice || findProduct.OfferPrice;
-    findProduct.WorkshopImages = fileNames.length > 0 ? fileNames : findProduct.WorkshopImages;
+    findProduct.WorkshopImages =
+      fileNames.length > 0 ? fileNames : findProduct.WorkshopImages;
 
     if (mode) {
       try {
         const parsedMode = JSON.parse(mode);
         findProduct.mode = {
-          online: parsedMode.online !== undefined ? parsedMode.online : findProduct.mode.online,
-          offline: parsedMode.offline !== undefined ? parsedMode.offline : findProduct.mode.offline,
+          online:
+            parsedMode.online !== undefined
+              ? parsedMode.online
+              : findProduct.mode.online,
+          offline:
+            parsedMode.offline !== undefined
+              ? parsedMode.offline
+              : findProduct.mode.offline,
         };
 
-
         findProduct.mode = JSON.stringify(findProduct.mode);
-
       } catch (error) {
         return res.status(400).json({ error: "Invalid mode format" });
       }
     }
-
-
 
     if (YouTubeLink) {
       findProduct.YouTubeLink = YouTubeLink;
@@ -235,24 +262,22 @@ exports.update = async (req, res) => {
       try {
         const parsedSlots = JSON.parse(WorkshopSlots);
         findProduct.WorkshopSlots = {
-          sessionType: parsedSlots.sessionType || findProduct.WorkshopSlots.sessionType,
-          slots: parsedSlots.slots.length ? parsedSlots.slots.map(slot => ({
-            startTime: slot.startTime,
-            endTime: slot.endTime,
-            Workshodate: slot.Workshodate,
-            duration: slot.duration
-          })) : findProduct.WorkshopSlots.slots,
+          sessionType:
+            parsedSlots.sessionType || findProduct.WorkshopSlots.sessionType,
+          slots: parsedSlots.slots.length
+            ? parsedSlots.slots.map((slot) => ({
+                startTime: slot.startTime,
+                endTime: slot.endTime,
+                Workshodate: slot.Workshodate,
+                duration: slot.duration,
+              }))
+            : findProduct.WorkshopSlots.slots,
         };
         findProduct.WorkshopSlots = JSON.stringify(findProduct.WorkshopSlots);
       } catch (error) {
         return res.status(400).json({ error: "Invalid WorkshopSlots format" });
       }
     }
-
-
-
-
-
 
     const updateProduct = await ProductModal.findOneAndUpdate(
       { _id: idd },
@@ -269,7 +294,33 @@ exports.update = async (req, res) => {
   }
 };
 
+exports.updateLive = async (req, res) => {
+  let { Live, Pause } = req.body;
 
+  try {
+    let idd = req.params.id;
+    const findProduct = await ProductModal.findOne({ _id: idd });
+    if (!findProduct) {
+      return res.json({ error: "No such record found" });
+    }
+
+    findProduct.Live = Live || findProduct.Live;
+    findProduct.Pause = Pause || findProduct.Pause;
+
+    const updateProduct = await ProductModal.findOneAndUpdate(
+      { _id: idd },
+      findProduct,
+      { new: true }
+    );
+
+    return res.status(200).json({
+      message: "Updated successfully",
+      data: updateProduct,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Unable to update the Product" });
+  }
+};
 
 exports.trash = async (req, res) => {
   let id = req.params.id;

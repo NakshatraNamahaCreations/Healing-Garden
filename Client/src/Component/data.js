@@ -62,70 +62,72 @@ export let Team = [
 
 export let TeamMembers = [
   {
-    img: "../aboutimg/team (4).png",
+    img: "../clients/team/Artboard -1.jpeg",
     name: "Archana",
-    position: "Art & Craft Artist",
+    position: "Mixed Media Artist",
   },
   {
-    img: "../aboutimg/team (5).png",
-    name: "Bijoya",
-    position: "Wellness Coach",
+    img: "../clients/team/Artboard – 2.png",
+    name: "Tanisha",
+    position: "Social Media Manager",
   },
   {
-    img: "../aboutimg/team (5).png",
+    img: "../clients/team/Artboard – 3.png",
     name: "Abhishek",
-    position: "Sound & Panic Healer",
+    position: "Sound & Pranic Healer",
   },
   {
-    img: "../aboutimg/team (3).png",
+    img: "../clients/team/Artboard – 4.png",
     name: "Sujala",
     position: "Sculptor",
   },
   {
-    img: "../aboutimg/team (2).png",
+    img: "../clients/team/Artboard – 5.png",
     name: "Radhika",
     position: "Learning and Developement Expert",
   },
   {
-    img: "../aboutimg/team (1).png",
+    img: "../clients/team/Artboard – 6.png",
     name: "Shristi",
     position: "Mindfullness and Meditation Coach",
-  },
-  {
-    img: "../aboutimg/team (5).png",
-    name: "Tanisha",
-    position: "Wellness Coach",
   },
 ];
 
 export let Clients = [
   {
-    type: "ge1", logo: "./clients/logo7.png",
+    type: "ge1",
+    logo: "./clients/logo7.png",
   },
   {
-    type: "ge1", logo: "./clients/logo6 (2).png",
+    type: "ge1",
+    logo: "./clients/logo6 (2).png",
   },
   {
-    type: "ge2", logo: "./clients/logo9.png",
+    type: "ge2",
+    logo: "./clients/logo9.png",
   },
   {
-    type: "ge1", logo: "./clients/logo8.png",
+    type: "ge1",
+    logo: "./clients/logo8.png",
   },
   {
-    type: "ge1", logo: "./clients/logo3.png",
+    type: "ge1",
+    logo: "./clients/logo3.png",
   },
 
   {
-    type: "ge1", logo: "./clients/logo4.png",
+    type: "ge1",
+    logo: "./clients/logo4.png",
   },
   {
-    type: "ge1", logo: "./clients/logo.png",
+    type: "ge1",
+    logo: "./clients/logo.png",
   },
 
   {
-    type: "ge1", logo: "./clients/logo5.png",
+    type: "ge1",
+    logo: "./clients/logo5.png",
   },
-
 ];
 
 export let testimonialsvid = [
@@ -177,14 +179,14 @@ export let testimonialsReview = [
     id: 3,
     Image: "./clients/testi.jpg",
     name: "Pravin",
-     companyname: "Tech Mahindra",
+    companyname: "Tech Mahindra",
     Reviews:
       "I feel blessed to be offered 20 minutes for a wonderful reset-thank you GM! By the way, what a handsome male voice! You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful ",
   },
   {
     id: 4,
     Image: "./clients/test3.jpg",
-     name: "Sushan",
+    name: "Sushan",
     companyname: "HCL",
     Reviews:
       "I feel blessed to be offered 20 minutes for a wonderful reset-thank you GM! By the way, what a handsome male voice! You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful ",
@@ -192,24 +194,24 @@ export let testimonialsReview = [
   {
     id: 5,
     Image: "./clients/test3.jpg",
-     name: "Sushan",
-     companyname: "Tech Mahindra",
+    name: "Sushan",
+    companyname: "Tech Mahindra",
     Reviews:
       "I feel blessed to be offered 20 minutes for a wonderful reset-thank you GM! By the way, what a handsome male voice! You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful ",
   },
   {
     id: 6,
     Image: "./clients/test3.jpg",
-     name: "Sushan",
-     companyname: "Tech Mahindra",
+    name: "Sushan",
+    companyname: "Tech Mahindra",
     Reviews:
       "I feel blessed to be offered 20 minutes for a wonderful reset-thank you GM! By the way, what a handsome male voice! You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful ",
   },
   {
     id: 7,
     Image: "./clients/test3.jpg",
-     name: "Sushan",
-     companyname: "Tech Mahindra",
+    name: "Sushan",
+    companyname: "Tech Mahindra",
     Reviews:
       "I feel blessed to be offered 20 minutes for a wonderful reset-thank you GM! By the way, what a handsome male voice! You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful You sure sound calm and confident sir! Namaste I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful I feel blessed to be offered 20 minutes for a wonderful ",
   },

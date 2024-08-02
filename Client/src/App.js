@@ -32,6 +32,8 @@ import RequestProposal from "./Component/Request";
 import Terms from "./Component/FooterPages/Terms";
 import PrivacyPolicy from "./Component/FooterPages/Privacy";
 import CancellationAndRefund from "./Component/FooterPages/Refund";
+import CorporatePage from "./Component/Corporate";
+import CorporateView from "./Component/CorporateView";
 // import Category from "./Component/Layout/Category";
 
 function App() {
@@ -68,7 +70,6 @@ function App() {
             </Layout>
           }
         />
-
         <Route
           path="Workshopdetails"
           element={
@@ -109,7 +110,6 @@ function App() {
             </Layout>
           }
         />
-
         <Route
           path="client-served"
           element={
@@ -120,7 +120,6 @@ function App() {
             </Layout>
           }
         />
-
         <Route
           path="testimonials"
           element={
@@ -131,7 +130,6 @@ function App() {
             </Layout>
           }
         />
-
         <Route
           path="cart"
           element={
@@ -142,7 +140,26 @@ function App() {
             </Layout>
           }
         />
-
+        <Route
+          path="corporate"
+          element={
+            <Layout>
+              <Header />
+              <CorporatePage />
+              <Footer />
+            </Layout>
+          }
+        />{" "}
+        <Route
+          path="corporate-view"
+          element={
+            <Layout>
+              <Header />
+              <CorporateView />
+              <Footer />
+            </Layout>
+          }
+        />
         <Route
           path="approach"
           element={
@@ -253,7 +270,6 @@ function App() {
             </Layout>
           }
         />
-
         <Route
           path="login"
           element={

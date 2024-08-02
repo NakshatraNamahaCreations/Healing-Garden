@@ -26,7 +26,7 @@ function Signup() {
     }
     try {
       let config = {
-        url: "https://api.healinggarden.co.in/api/user/adduser",
+        url: "http://localhost:8002/api/user/adduser",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {

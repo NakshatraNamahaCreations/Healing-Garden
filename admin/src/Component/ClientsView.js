@@ -78,7 +78,7 @@ export default function ClientsView() {
 
   const getclient = async () => {
     try {
-      let client = await http.get(`/product/getproductbyuser/${userdata.id}`);
+      let client = await http.get(`/product/getworkshopbyuser/${userdata.id}`);
       setClientsData(client.data.data);
     } catch (error) {
       console.log("Error fetching category data", error);

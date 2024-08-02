@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "https://api.healinggarden.co.in/api",
+  baseURL: "http://localhost:8002/api",
 });
 
 export default http;

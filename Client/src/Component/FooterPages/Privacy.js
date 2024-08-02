@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
           <a href="/" className="anchortext">
             Home
           </a>{" "}
-          {">"} Terms
+          {">"} Privacy Policy
         </p>
       </div>
 

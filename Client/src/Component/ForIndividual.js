@@ -46,16 +46,18 @@ export default function ForIndividual() {
 
   const getAllCategory = async () => {
     let response = await axios.get(
-      "https://api.healinggarden.co.in/api/category/getcategory"
+      "http://localhost:8002/api/category/getcategory"
     );
     setcategoryData(response.data.data);
   };
 
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "https://api.healinggarden.co.in/api/workshop/getallProduct"
+      "http://localhost:8002/api/workshop/getallworkshop"
     );
-    let filteredData = response.data.data.filter((ele) => ele.Live === true);
+    let filteredData = response.data.data.filter(
+      (ele) => ele.Live === "Live" && ele.clientType === "Individual"
+    );
     setWorkshop(filteredData);
     setFilteredWorkshop(filteredData);
   };
@@ -239,7 +241,6 @@ export default function ForIndividual() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
   }, []);
   return (
     <>
@@ -338,7 +339,7 @@ export default function ForIndividual() {
                     <img
                       className="col-md-12 p-0 m-0 indi_img"
                       height={150}
-                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`http://localhost:8002/Product/${Ele.WorkshopImages?.[0]}`}
                       onClick={() => handleView(Ele)}
                     />
                     <p className="individualtext p-2 m-0">
@@ -368,7 +369,7 @@ export default function ForIndividual() {
                   <div className="row">
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="price"
                         value="Free"
                         onChange={handleSelect}
@@ -379,7 +380,7 @@ export default function ForIndividual() {
                     </p>
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="price"
                         value="0.Rs-500"
                         onChange={handleSelect}
@@ -390,7 +391,7 @@ export default function ForIndividual() {
                     </p>
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="price"
                         value="Rs. 501 - Rs. 2000"
                         onChange={handleSelect}
@@ -403,7 +404,7 @@ export default function ForIndividual() {
                     </p>
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="price"
                         value="Rs. 2001 - Rs. 5000"
                         onChange={handleSelect}
@@ -416,7 +417,7 @@ export default function ForIndividual() {
                     </p>
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="price"
                         value="Above Rs. 5000"
                         onChange={handleSelect}
@@ -434,7 +435,7 @@ export default function ForIndividual() {
                   {categoryData.map((Ele, index) => (
                     <p key={index}>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="category"
                         value={Ele._id}
                         onChange={handleSelect}
@@ -452,7 +453,7 @@ export default function ForIndividual() {
                   <div className="row">
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="mode"
                         value="Online"
                         onChange={handleSelect}
@@ -463,7 +464,7 @@ export default function ForIndividual() {
                     </p>
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="mode"
                         value="Offline"
                         onChange={handleSelect}
@@ -481,7 +482,7 @@ export default function ForIndividual() {
                   <div className="row">
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="city"
                         value="Mumbai"
                         onChange={handleSelect}
@@ -492,7 +493,7 @@ export default function ForIndividual() {
                     </p>
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="city"
                         value="Hyderabad"
                         onChange={handleSelect}
@@ -503,7 +504,7 @@ export default function ForIndividual() {
                     </p>
                     <p>
                       <input
-                        className="radio input_sty me-2 m-auto"
+                        className="me-2 m-auto"
                         name="city"
                         value="Bengaluru"
                         onChange={handleSelect}

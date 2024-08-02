@@ -7,7 +7,7 @@ export default function CancellationAndRefund() {
           <a href="/" className="anchortext">
             Home
           </a>{" "}
-          {">"} Terms
+          {">"}  Refund and Cancellation Policy 
         </p>
       </div>
 

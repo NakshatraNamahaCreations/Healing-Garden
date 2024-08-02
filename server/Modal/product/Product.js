@@ -16,12 +16,17 @@ const Workshops = new mongoose.Schema(
     minAge: { type: String, default: "" },
     discount: { type: String, default: 0 },
     YouTubeLink: { type: Object },
-    Live: { type: Boolean },
+    Live: { type: String },
     Pause: { type: Boolean },
     OfferPrice: { type: Number, default: 0 },
     WorkshopImages: { type: [String], required: true },
-    terms: { type: Object, default: {} },
-
+    terms: { type: Array, default: [] },
+    clientType: { type: String, default: "" },
+    reasonToJoin: { type: Array, default: [] },
+    primaryObjective: { type: Array, default: [] },
+    SuitableFor: { type: Array, default: [] },
+    Maxparticipant: { type: Number, default: 0 },
+    Minparticipant: { type: Number, default: 0 },
   },
 
   { timestamps: true }

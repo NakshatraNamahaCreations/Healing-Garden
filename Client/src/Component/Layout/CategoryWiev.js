@@ -16,12 +16,11 @@ export default function CategoryWiev() {
   useEffect(() => {
     getAllWorkShop();
     window.scrollTo(0, 0);
-   
   }, [idd]);
-  
+
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "https://api.healinggarden.co.in/api/workshop/getallProduct"
+      "http://localhost:8002/api/workshop/getallworkshop"
     );
     let filteredData = response.data.data.filter((ele) => ele.category == idd);
     console.log(filteredData, "filteredData");
@@ -40,11 +39,7 @@ export default function CategoryWiev() {
         <a className="footertext" href="/">
           Home
         </a>{" "}
-        {">"}{" "}
-        <a className="footertext" >
-          Workshops
-        </a>{" "}
-        {">"}{" "}
+        {">"} <a className="footertext">Workshops</a> {">"}{" "}
         <a className="footertext" href="categorylist">
           {data}
         </a>{" "}
@@ -91,22 +86,25 @@ export default function CategoryWiev() {
             <div className="row  category-main index_value">
               {Filtered?.map((Ele) => {
                 return (
-                  <div className="col-md-4  mt-4 text-center">
-                    <img
-                      onClick={() => handleView(Ele)}
-                      className="row m-auto p-4 cursor"
-                      width={220}
-                      height={220}
-                      style={{
-                        borderRadius: "40px",
-                        border: "5px solid #a77a43",
-                      }}
-                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
-                    />
-
-                    <p className="col-md-8 m-auto sub_heading p-3 ">
-                      {Ele.workshopTitle}
-                    </p>
+                  <div className="col-md-4    mt-4 text-center ">
+                    <div className="row">
+                      <img
+                        onClick={() => handleView(Ele)}
+                        className="col-md-9 m-auto cursor p-0"
+                        width={220}
+                        height={220}
+                        style={{
+                          borderRadius: "40px",
+                          border: "5px solid #a77a43",
+                        }}
+                        src={`http://localhost:8002/Product/${Ele.WorkshopImages?.[0]}`}
+                      />
+                    </div>
+                    <div className="row">
+                      <p className=" text-center m-auto sub_heading p-3 ">
+                        {Ele.workshopTitle}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
@@ -177,7 +175,7 @@ export default function CategoryWiev() {
                     <img
                       className="row category_img category_img1 m-auto p-2 "
                       height={100}
-                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`http://localhost:8002/Product/${Ele.WorkshopImages?.[0]}`}
                     />
                     <p className="col-md-6 m-auto sub_heading fs-15 p-3t ">
                       {Ele.workshopTitle}

@@ -17,10 +17,22 @@ export default function Footer() {
   if (location.pathname === "/about") {
     hideSeoForAbout = true;
   }
+  if (location.pathname === "/terms") {
+    hideSeoForAbout = true;
+  }
 
+  if (location.pathname === "/privacy") {
+    hideSeoForAbout = true;
+  }
+  if (location.pathname === "/refund") {
+    hideSeoForAbout = true;
+  }
+  if (location.pathname === "/cart") {
+    hideSeoForAbout = true;
+  }
   const [Proposal, setProposal] = useState(false);
   const handleWhatsAppClick = () => {
-    window.open("https://wa.me/9620520200", "_blank");
+    window.open("https://wa.me/+91 9620520200", "_blank");
   };
   return (
     <>
@@ -156,7 +168,13 @@ export default function Footer() {
           <div className="col-md-3 col-sm-4 mt-3 m-auto">
             <div className="row">
               <div className="col-4 col-md-6 ">
-                <img className="img-fluid" src="./events/logo.png" alt="Logo" />
+                <a href="https://www.google.com/maps/place/Healing+Garden/@12.9915495,77.7278772,15z/data=!4m6!3m5!1s0x3bae11e0928abc31:0x26cb377d91920b6c!8m2!3d12.9915495!4d77.7278772!16s%2Fg%2F11svm994sb?entry=tts&g_ep=EgoyMDI0MDcwMS4wKgBIAVAD">
+                  <img
+                    className="img-fluid"
+                    src="./events/logo.png"
+                    alt="Logo"
+                  />
+                </a>
               </div>
             </div>
             <div className="row mt-5">

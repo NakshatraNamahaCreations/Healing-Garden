@@ -68,7 +68,7 @@ export default function Invoice() {
     setInvoiceDetails(filteredData);
     let pdata = filteredData.flatMap((ele) => ele.Products);
     setProductsDetails(pdata);
-    let productdata = await http.get(`/product/getallProduct`);
+    let productdata = await http.get(`/product/getallworkshop`);
     setProduct(productdata.data.data);
   };
 

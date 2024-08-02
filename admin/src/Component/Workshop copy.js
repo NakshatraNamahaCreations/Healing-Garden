@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { CgAdd } from "react-icons/cg";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import http from "../http.common.function";
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
 
+import Multiselect from "multiselect-react-dropdown";
 
 export default function Workshop() {
   const location = useLocation();
-  let idd = location.state.idd || null
-  let Cate = location.state.category || null
-  console.log(location.state)
-  const [EditWrokshop, setEditWrokshop] = useState()
+  let idd = location.state?.idd || null;
+  const [WorkshopImage, setWorkshopImage] = useState([]);
+  const [YouTubeLink, setYouTubeLink] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [recentlyUploaded, setRecentlyUploaded] = useState("");
+  const [ViewImage, setViewImage] = useState();
+  const [terms, setterms] = useState();
+
+  const [EditWrokshop, setEditWrokshop] = useState();
   const [selectedSlots, setSelectedSlots] = useState({
     sessionType: "",
-    slots: [{
-      startTime: "",
-      endTime: "",
-      Workshodate: "",
-      duration: "",
-    }]
+    slots: [
+      {
+        startTime: "",
+        endTime: "",
+        Workshodate: "",
+        duration: "",
+      },
+    ],
   });
-
 
   let InitialData = {
     workshopTitle: "",
@@ -32,13 +39,14 @@ export default function Workshop() {
     sessionAddress: "",
     gMapDirection: "",
     language: "",
-    minAge: "",
+    minAge: 1,
     WFeePerParticipant: "",
     discount: "",
-    OfferPrice: 0
+    OfferPrice: "",
+    clientType: "",
   };
-  const [Live, setLive] = useState(false)
-  const [Pause, setPause] = useState(false)
+  const [Live, setLive] = useState(false);
+  const [Pause, setPause] = useState(false);
   const [Mode, setMode] = useState({ online: false, offline: false });
 
   const handleMode = (e) => {
@@ -51,7 +59,7 @@ export default function Workshop() {
 
   useEffect(() => {
     getcategory();
-    getWorkShop()
+    getWorkShop();
   }, []);
   let Terms = {
     title: "Terms & Condition",
@@ -69,8 +77,12 @@ export default function Workshop() {
   const [Category, setCategory] = useState([]);
   const [WorkshopForm, setWorkshopForm] = useState(InitialData);
 
+  const [selectedLanguage, setselectedLangauge] = useState([]);
   const [discription, setDiscription] = useState("");
 
+  const [ReasonToJoin, setReasonToJoin] = useState("");
+  const [PrimaryObjective, setPrimaryObjective] = useState("");
+  const [Suitablefor, setSuitablefor] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
   const [editorEnabled, setEditorEnabled] = useState(true);
   const handleEditorChange = (event, editor) => {
@@ -89,6 +101,7 @@ export default function Workshop() {
   //  handle form data
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setWorkshopForm((prevData) => ({
       ...prevData,
       [name]: value,
@@ -96,13 +109,14 @@ export default function Workshop() {
   };
   const getWorkShop = async () => {
     try {
-      let Wrokshop = await http.get(`/workshop/getbyworkshopbyid/${idd}`);
-      setEditWrokshop(Wrokshop.data.data);
+      if (idd) {
+        let Wrokshop = await http.get(`/workshop/getbyworkshopbyid/${idd}`);
+        setEditWrokshop(Wrokshop.data.data);
+      }
     } catch (error) {
       console.log("Error fetching category data", error);
     }
   };
-  console.log(EditWrokshop, "Wrokshop")
 
   const getcategory = async () => {
     try {
@@ -118,11 +132,10 @@ export default function Workshop() {
       if (
         !WorkshopForm.category ||
         !WorkshopForm.workshopTitle ||
-        !WorkshopForm.WFeePerParticipant
+        !WorkshopForm.clientType
       ) {
         alert("Please Fill");
       }
-
 
       const formdata = new FormData();
       formdata.append("workshopTitle", WorkshopForm.workshopTitle);
@@ -130,7 +143,8 @@ export default function Workshop() {
       formdata.append(
         "mode",
         JSON.stringify({
-          Mode,
+          online: Mode.online,
+          offline: Mode.offline,
         })
       );
       formdata.append("city", WorkshopForm.city);
@@ -138,16 +152,26 @@ export default function Workshop() {
       formdata.append("sessionAddress", WorkshopForm.sessionAddress);
       formdata.append("gMapDirection", WorkshopForm.gMapDirection);
       formdata.append("WorkshopSlots", JSON.stringify(selectedSlots));
-      formdata.append("language", WorkshopForm.language);
+      formdata.append("language", JSON.stringify(selectedLanguage));
       formdata.append("minAge", WorkshopForm.minAge);
       formdata.append("discription", discription);
-      formdata.append("description", WorkshopForm.Terms);
+      formdata.append("clientType", WorkshopForm.clientType);
+      formdata.append("reasonToJoin", ReasonToJoin);
+      formdata.append("primaryObjective", PrimaryObjective);
+      formdata.append("SuitableFor", Suitablefor);
+      formdata.append("terms", JSON.stringify(Terms));
       formdata.append("WFeePerParticipant", WorkshopForm.WFeePerParticipant);
       formdata.append("discount", WorkshopForm.discount);
-      formdata.append("ImagOrYouTubeLink", JSON.stringify(images));
+      formdata.append("YouTubeLink", JSON.stringify(YouTubeLink));
       formdata.append("Live", Live);
       formdata.append("Pause", Pause);
       formdata.append("OfferPrice", WorkshopForm.OfferPrice);
+
+      if (WorkshopImage) {
+        for (let i = 0; i < WorkshopImage.length; i++) {
+          formdata.append("WorkshopImages", WorkshopImage[i]);
+        }
+      }
 
       let response = await http.post(`/workshop/addworkshop`, formdata, {
         headers: {
@@ -156,7 +180,7 @@ export default function Workshop() {
       });
       if (response.status === 200) {
         alert("WorkShop Added Successfully");
-        window.location.reload("");
+        window.location.assign("/workshop");
       }
     } catch (error) {
       console.log(error);
@@ -164,11 +188,10 @@ export default function Workshop() {
   };
 
   const handleDateAdd = () => {
-
     setSelectedSlots({
       ...selectedSlots,
       slots: [
-        ...selectedSlots.slots,
+        ...selectedSlots?.slots,
         {
           startTime: "",
           endTime: "",
@@ -177,11 +200,11 @@ export default function Workshop() {
         },
       ],
     });
-
   };
-
-
-
+  const handleRemovetrow = (index) => {
+    const updatedSlots = selectedSlots.slots.filter((_, i) => i !== index);
+    setSelectedSlots({ ...selectedSlots, slots: updatedSlots });
+  };
 
   const handleChangedate = (e, index) => {
     const { name, value } = e.target;
@@ -216,7 +239,6 @@ export default function Workshop() {
         return `${newHours}:${minutes} ${newModifier}`;
       };
       if (Workshodate && startTime && endTime) {
-        // Convert start and end time to 12-hour format with AM/PM
         const startAMPM = convertToAMPMFormat(startTime);
         const endAMPM = convertToAMPMFormat(endTime);
 
@@ -227,10 +249,9 @@ export default function Workshop() {
         const end = new Date(endDateTime);
 
         if (!isNaN(start) && !isNaN(end)) {
-          const duration = Math.abs(end - start) / 60000; // Difference in minutes
+          const duration = Math.abs(end - start) / 60000;
           updatedSlots[index].duration = duration;
         } else {
-          // Handle invalid date error
           console.error("Invalid date or time format");
         }
       } else {
@@ -244,30 +265,16 @@ export default function Workshop() {
     }
   };
 
-  const [images, setImages] = useState([]);
-  const [uTubeLink, setuTubeLink] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [recentlyUploaded, setRecentlyUploaded] = useState("");
-
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setInputValue(e.target.result);
-      setRecentlyUploaded(e.target.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
-
-
   const handleUploadYoutubeLink = (e) => {
     const youtubeUrl = e.target.value;
     if (youtubeUrl.includes("youtube.com")) {
       const videoId = youtubeUrl.split("v=")[1];
       if (videoId) {
         const ampersandPosition = videoId.indexOf("&");
-        const id = ampersandPosition !== -1 ? videoId.substring(0, ampersandPosition) : videoId;
+        const id =
+          ampersandPosition !== -1
+            ? videoId.substring(0, ampersandPosition)
+            : videoId;
         const youtubeEmbedUrl = `https://www.youtube.com/embed/${id}`;
         setInputValue(youtubeEmbedUrl);
         setRecentlyUploaded(youtubeEmbedUrl);
@@ -275,13 +282,8 @@ export default function Workshop() {
     }
   };
 
-
-  const handleAddImage = () => {
-    if (uTubeLink) {
-      setImages([...images, { type: "YouTubeLink", url: inputValue }]);
-    } else {
-      setImages([...images, { type: "Image", url: recentlyUploaded }]);
-    }
+  const handleLink = () => {
+    setYouTubeLink([...YouTubeLink, inputValue]);
     setInputValue("");
     setRecentlyUploaded("");
   };
@@ -294,7 +296,8 @@ export default function Workshop() {
       formdata.append(
         "mode",
         JSON.stringify({
-          Mode,
+          online: Mode.online,
+          offline: Mode.offline,
         })
       );
       formdata.append("city", WorkshopForm.city);
@@ -302,43 +305,173 @@ export default function Workshop() {
       formdata.append("sessionAddress", WorkshopForm.sessionAddress);
       formdata.append("gMapDirection", WorkshopForm.gMapDirection);
       formdata.append("WorkshopSlots", JSON.stringify(selectedSlots));
-      formdata.append("language", WorkshopForm.language);
+      formdata.append("language", JSON.stringify(selectedLanguage));
       formdata.append("minAge", WorkshopForm.minAge);
       formdata.append("discription", discription);
-      formdata.append("description", WorkshopForm.Terms);
+      formdata.append("terms", JSON.stringify(Terms));
       formdata.append("WFeePerParticipant", WorkshopForm.WFeePerParticipant);
       formdata.append("discount", WorkshopForm.discount);
-      formdata.append("ImagOrYouTubeLink", JSON.stringify(images));
+      formdata.append("YouTubeLink", JSON.stringify(YouTubeLink));
       formdata.append("Live", Live);
       formdata.append("Pause", Pause);
       formdata.append("OfferPrice", WorkshopForm.OfferPrice);
-      let response = await http.put(
-        `/workshop/editProduct/${idd}`,
-        formdata,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+      formdata.append("clientType", WorkshopForm.clientType);
+      formdata.append("reasonToJoin", ReasonToJoin);
+      formdata.append("primaryObjective", PrimaryObjective);
+      formdata.append("SuitableFor", Suitablefor);
+      if (WorkshopImage) {
+        for (let i = 0; i < WorkshopImage.length; i++) {
+          formdata.append("WorkshopImages", WorkshopImage[i]);
         }
-      );
+      }
+      let response = await http.put(`/workshop/editProduct/${idd}`, formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (response.status === 200) {
-        alert("SubCategory updated successfully!");
-        window.location.reload();
+        alert("Workshop updated successfully!");
+        window.location.assign("/workshop");
       }
     } catch (error) {
-      console.error("Error updating Subcategory:", error);
+      console.error("Error updating Workshop:", error);
+    }
+  };
+  useEffect(() => {
+    if (EditWrokshop && idd) {
+      setWorkshopForm({
+        workshopTitle:
+          EditWrokshop?.workshopTitle || WorkshopForm?.workshopTitle,
+        category: EditWrokshop?.category || WorkshopForm?.category,
+        city: EditWrokshop?.city || WorkshopForm?.city,
+        subLocation: EditWrokshop?.subLocation || WorkshopForm?.subLocation,
+        sessionAddress:
+          EditWrokshop?.sessionAddress || WorkshopForm?.sessionAddress,
+        gMapDirection:
+          EditWrokshop?.gMapDirection || WorkshopForm?.gMapDirection,
+        language: EditWrokshop?.language || selectedLanguage,
+        minAge: EditWrokshop?.minAge || WorkshopForm?.minAge,
+        WFeePerParticipant:
+          EditWrokshop?.WFeePerParticipant || WorkshopForm?.WFeePerParticipant,
+        discount: EditWrokshop?.discount || WorkshopForm?.discount,
+        OfferPrice: EditWrokshop?.OfferPrice || WorkshopForm?.OfferPrice,
+        clientType: EditWrokshop?.clientType || WorkshopForm?.clientType,
+        Terms: EditWrokshop?.terms || Terms,
+        reasonToJoin: EditWrokshop?.reasonToJoin || ReasonToJoin,
+        primaryObjective: EditWrokshop?.primaryObjective || PrimaryObjective,
+        SuitableFor: EditWrokshop?.SuitableFor || Suitablefor,
+        discription: EditWrokshop.discription || discription,
+      });
+      setLive(EditWrokshop.Live || Live);
+      setPause(EditWrokshop.Pause || Pause);
+      setWorkshopImage({
+        WorkshopImage: EditWrokshop?.WorkshopImages || WorkshopImage,
+      });
+
+      setMode({
+        online: JSON.parse(EditWrokshop.mode)?.online || Mode.online,
+        offline: JSON.parse(EditWrokshop.mode)?.offline || Mode.offline,
+      });
+
+      setselectedLangauge({
+        language: JSON.parse(EditWrokshop?.language) || selectedLanguage,
+      });
+      setSelectedSlots({
+        sessionType:
+          JSON.parse(EditWrokshop.WorkshopSlots)?.sessionType ||
+          selectedSlots?.sessionType,
+        slots:
+          JSON.parse(EditWrokshop?.WorkshopSlots)?.slots ||
+          selectedSlots?.slots,
+      });
+
+      console.log(EditWrokshop, "selectedLanguage");
+
+      let parseImag = JSON.parse(EditWrokshop.YouTubeLink);
+      setYouTubeLink(parseImag || YouTubeLink);
+    }
+  }, [EditWrokshop]);
+
+  const handleChangeImage = (e) => {
+    const files = e.target.files;
+    const fileArray = Array.from(files);
+
+    if (fileArray.length > 0) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setViewImage(event.target.result);
+      };
+      reader.readAsDataURL(fileArray[0]);
+      setWorkshopImage(fileArray);
+    } else {
+      console.error("No files selected");
     }
   };
 
+  const deleteworkshop = async (idd) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete this Workshop?`
+    );
+
+    if (confirmed) {
+      let data = await http.post(`/workshop/trash/${idd}`);
+      if (data.status === 200) {
+        alert("Workshop deleted succesfully ");
+        window.location.reload();
+      }
+    } else {
+      console.log("Workshop canceled the deletion.");
+    }
+  };
+
+  const [showPreview, setShowPreview] = useState(false);
+
+  const handlePreview = () => {
+    setShowPreview(true);
+  };
+  const options = [
+    { name: "English" },
+    { name: "Kannada" },
+    { name: "Hindi" },
+    { name: "Tamil" },
+    { name: "Telugu" },
+    { name: "Marathi" },
+    { name: "Bengali" },
+    { name: "Marathi" },
+  ];
+  const onSelectLanguage = (selectedList, selectedItem) => {
+    setselectedLangauge(selectedList);
+  };
+
+  const onRemoveLanguage = (selectedList, removedItem) => {
+    setselectedLangauge(selectedList);
+  };
+
+  const handleCskEditoChange = (setter) => (event, editor) => {
+    const data = editor.getData();
+    setter(data);
+  };
   return (
     <div className="col-md-11 m-auto mt-3 p-3">
       <div className="row mt-2 p-2">
         <div className="col-md-4">
+          <Form.Select
+            value={WorkshopForm.clientType}
+            size="sm"
+            onChange={handleChange}
+            name="clientType"
+          >
+            <option>Select Client Type...</option>
+
+            <option value="Corporate">Corporate</option>
+            <option value="Individual">Individual</option>
+          </Form.Select>
+        </div>
+        <div className="col-md-4">
           <Form.Control
             onChange={handleChange}
             name="workshopTitle"
-
             defaultValue={
               EditWrokshop && idd !== null
                 ? EditWrokshop.workshopTitle
@@ -350,14 +483,12 @@ export default function Workshop() {
         </div>
         <div className="col-md-4">
           <Form.Select
-
-            selected={EditWrokshop && idd !== null ? Cate : WorkshopForm.category}
             value={WorkshopForm.category}
             size="sm"
             onChange={handleChange}
             name="category"
           >
-            <option >Choose...</option>
+            <option>Select Category...</option>
             {Category?.map((cate) => (
               <option value={cate._id}>{cate.category}</option>
             ))}
@@ -370,11 +501,7 @@ export default function Workshop() {
           <Form.Check
             name="online"
             onChange={handleMode}
-            defaultChecked={
-              EditWrokshop && idd !== null
-                ? JSON.parse(EditWrokshop.mode).Mode.online === true
-                : Mode.online
-            }
+            checked={Mode.online}
             className="m-auto"
             type="checkbox"
           />
@@ -382,13 +509,7 @@ export default function Workshop() {
           <Form.Check
             name="offline"
             onChange={handleMode}
-
-
-            defaultChecked={
-              EditWrokshop && idd !== null
-                ? EditWrokshop.offline
-                : Mode.offline
-            }
+            checked={Mode.offline}
             className="m-auto"
             type="checkbox"
           />
@@ -400,33 +521,22 @@ export default function Workshop() {
         <div className="col-md-4">
           <Form.Select
             name="city"
-
+            value={WorkshopForm.city}
             onChange={handleChange}
-
-            defaultValue={
-              EditWrokshop && idd !== null
-                ? EditWrokshop.city
-                : Mode.city
-            }
           >
-            <option > City </option>
+            <option> City </option>
             <option value={"Bengaluru"}> Bengaluru </option>
             <option value={"Delhi"}> Delhi </option>
             <option value={"Mumbai"}> Mumbai </option>
           </Form.Select>
         </div>
         <div className="col-md-4">
-
           <Form.Select
             name="subLocation"
-            defaultValue={
-              EditWrokshop && idd !== null
-                ? EditWrokshop.subLocation
-                : WorkshopForm.subLocation
-            }
+            value={WorkshopForm.subLocation}
             onChange={handleChange}
           >
-            <option >Sub Location</option>
+            <option>Sub Location</option>
             <option value={"Channsandra"}>Channsandra</option>
             <option value={"R.R.Nagar"}>R.R.Nagar</option>
             <option value={"Dwarka Nagar"}>Dwarka Nagar</option>
@@ -436,13 +546,8 @@ export default function Workshop() {
       <div className="row mt-2 p-2">
         <div className="col-md-8">
           <Form.Control
-            defaultValue={
-              EditWrokshop && idd !== null
-                ? EditWrokshop.sessionAddress
-                : WorkshopForm.sessionAddress
-            }
             onChange={handleChange}
-
+            value={WorkshopForm.sessionAddress}
             className="col-md-8 session"
             name="sessionAddress"
             placeholder="Workshop/Session Address"
@@ -454,12 +559,7 @@ export default function Workshop() {
           <Form.Control
             onChange={handleChange}
             name="gMapDirection"
-
-            defaultValue={
-              EditWrokshop && idd !== null
-                ? EditWrokshop.gMapDirection
-                : WorkshopForm.gMapDirection
-            }
+            value={WorkshopForm.gMapDirection}
             className="session"
             placeholder="Google map direction"
           />
@@ -472,11 +572,11 @@ export default function Workshop() {
             Date Time of Workshop{" "}
             {selectedSlots?.sessionType ===
               "Multiple Sessions in a Workshop" && (
-                <CgAdd
-                  style={{ color: "skyblue", fontWeight: "bold" }}
-                  onClick={handleDateAdd}
-                />
-              )}
+              <CgAdd
+                style={{ color: "skyblue", fontWeight: "bold" }}
+                onClick={handleDateAdd}
+              />
+            )}
           </p>
         </div>
 
@@ -491,7 +591,6 @@ export default function Workshop() {
                 name="sessionType"
                 checked={selectedSlots.sessionType === "One Session"}
                 onChange={handleChangedate}
-
               />
             </div>
             <div className="col-md-8">
@@ -502,14 +601,13 @@ export default function Workshop() {
                 value="Multiple Sessions in a Workshop"
                 name="sessionType"
                 checked={
-                  selectedSlots.sessionType === "Multiple Sessions in a Workshop"
+                  selectedSlots.sessionType ===
+                  "Multiple Sessions in a Workshop"
                 }
                 onChange={handleChangedate}
-
               />
             </div>
           </div>
-
         </div>
         {selectedSlots.slots.map((slot, index) => (
           <div key={index} className="row mt-2">
@@ -552,9 +650,19 @@ export default function Workshop() {
             {/* Duration */}
             <div className="row mt-3">
               <div className="col-md-9"></div>
-              <p className="col-md-3 sub-sub_heading">
-                Duration {slot.duration}(Min)
-              </p>
+
+              <div className="col-md-3 d-flex">
+                <p className="sub-sub_heading me-2">
+                  Duration {slot.duration}(Min)
+                </p>
+
+                <i
+                  onClick={() => handleRemovetrow(index)}
+                  class="fa fa-trash"
+                  title="Delete"
+                  style={{ color: "#dc3545", cursor: "pointer" }}
+                ></i>
+              </div>
             </div>
             <hr />
           </div>
@@ -563,49 +671,36 @@ export default function Workshop() {
       <div className="row">
         <div className="row">
           <div className="col-md-6">
-            <Form.Select name="language"
-
-
-              defaultValue={
-                EditWrokshop && idd !== null
-                  ? EditWrokshop.language
-                  : WorkshopForm.language
-              } onChange={handleChange}>
-              <option >Select Language</option>
-              <option value={"English"}>English</option>
-              <option value={"Hindi"}>Hindi</option>
-              <option value={"Kannada"}>Kannada</option>
-              <option value={"Tamil"}>Tamil</option>
-              <option value={"Telugu"}>Telugu</option>
-              <option value={"Marathi"}>Marathi</option>
-              <option value={"Bengali"}>Bengali</option>
-              <option value={"Punjabi"}>Punjabi</option>
-            </Form.Select>
+            <Multiselect
+              options={options}
+              selectedValues={selectedLanguage}
+              onSelect={onSelectLanguage}
+              onRemove={onRemoveLanguage}
+              displayValue="name"
+              placeholder="Select language"
+            />
           </div>
           <div className="col-md-6">
-            <Form.Select onChange={handleChange}
-              defaultValue={
-                EditWrokshop && idd !== null
-                  ? EditWrokshop.minAge
-                  : WorkshopForm.minAge
-              }
-              name="minAge">
-              <option >Minimum Age</option>
-              <option value={"1"}>1</option>
-              <option value={"2"}>2</option>
-              <option value={"3"}>3</option>
-              <option value={"4"}>4</option>
-              <option value={"5"}>5</option>
-              <option value={"6"}>6</option>
-              <option value={"7"}>7</option>
-              <option value={"8"}>8</option>
-              <option value={"9"}>9</option>
-              <option value={"10"}>10</option>
-              <option value={"11"}>11</option>
-              <option value={"12"}>12</option>
-            </Form.Select>
+            <Form.Control
+              onChange={handleChange}
+              value={WorkshopForm.minAge}
+              name="minAge"
+              type="text"
+              placeholder="Enter age"
+            />
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-6"></div>
+          <div className="col-md-6">
+            <p className="max-limit ">
+              {WorkshopForm.minAge > 40
+                ? "Age limit should be 40 & less than 40  "
+                : ""}
+            </p>
+          </div>
+        </div>
+
         <div className="row mt-5">
           <h6 className="main_heading">
             About the event Max 7000 Characters Only
@@ -620,31 +715,66 @@ export default function Workshop() {
               data={discription}
               onChange={handleEditorChange}
               disabled={!editorEnabled}
-              defaultValue={
-                EditWrokshop && idd !== null
-                  ? EditWrokshop.data
-                  : discription
-              }
             />
           </div>
         </div>
-        <div className="row terms-condition mt-5 p-4">
-          <p>{Terms?.title}</p>
-          {Terms?.discription?.map((ele) => (
-            <li className="terms">{ele}</li>
-          ))}
-        </div>
-        <div className="row mt-5 text-center m-auto">
+        <div className="row mt-5 p-4">
+          <p>Reason to join</p>
 
+          <div>
+            <CKEditor
+              editor={ClassicEditor}
+              data={ReasonToJoin}
+              onChange={handleCskEditoChange(setReasonToJoin)}
+            />
+          </div>
+        </div>
+
+        {WorkshopForm.clientType === "Corporate" && (
+          <>
+            <div className="row mt-5 p-4">
+              <p>Primary Objective</p>
+
+              <div>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={PrimaryObjective}
+                  onChange={handleCskEditoChange(setPrimaryObjective)}
+                />
+              </div>
+            </div>
+
+            <div className="row mt-5 p-4">
+              <p>Suitable For </p>
+
+              <div>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={Suitablefor}
+                  onChange={handleCskEditoChange(setSuitablefor)}
+                />
+              </div>
+            </div>
+          </>
+        )}
+        <div className="row mt-5 p-4">
+          <p>Terms & Conditions</p>
+
+          <div>
+            <CKEditor
+              editor={ClassicEditor}
+              data={terms}
+              onChange={handleCskEditoChange(setterms)}
+            />
+          </div>
+        </div>
+
+        <div className="row mt-5 text-center m-auto">
+          {/* <div className="col-md-1"></div> */}
           <div className="col-md-4">
             <Form.Control
-              defaultValue={
-                EditWrokshop && idd !== null
-                  ? EditWrokshop.WFeePerParticipant
-                  : WorkshopForm.WFeePerParticipant
-              }
               onChange={handleChange}
-
+              value={WorkshopForm.WFeePerParticipant}
               name="WFeePerParticipant"
               className="p-2 session"
               placeholder="Workshop Fee Per Participant"
@@ -653,12 +783,7 @@ export default function Workshop() {
           <div className="col-md-4">
             <Form.Control
               onChange={handleChange}
-
-              defaultValue={
-                EditWrokshop && idd !== null
-                  ? EditWrokshop.OfferPrice
-                  : WorkshopForm.OfferPrice
-              }
+              value={WorkshopForm.OfferPrice}
               name="OfferPrice"
               className="p-2 session"
               placeholder="Workshop Offer Price"
@@ -667,81 +792,118 @@ export default function Workshop() {
           <div className="col-md-4">
             <Form.Control
               onChange={handleChange}
-
-              defaultValue={
-                EditWrokshop && idd !== null
-                  ? EditWrokshop.discount
-                  : WorkshopForm.discount
-              }
+              value={WorkshopForm.discount}
               name="discount"
-              className="p-2 session" placeholder="Discount" />
+              className="p-2 session"
+              placeholder="Discount"
+            />
           </div>
+          {/* <div className="col-md-1"></div> */}
+        </div>
 
+        <div className="row mt-3">
+          <div className="col-md-8 m-auto mt-3">
+            <p className="d-flex m-auto sub_heading ">
+              <span className="cursor me-3" name="img">
+                Upload Images
+              </span>
+
+              <div>
+                <Form.Control
+                  className="col-md-4 p-0"
+                  multiple
+                  onChange={handleChangeImage}
+                  type="file"
+                />
+              </div>
+            </p>
+
+            <div className="session-image mt-3 p-2 text-center">
+              <img
+                src={
+                  ViewImage
+                    ? ViewImage
+                    : `http://localhost:8002/Product/${EditWrokshop?.WorkshopImage}`
+                }
+                alt="Uploaded"
+                height={200}
+                className="col-md-12 m-auto p-0"
+                style={{ borderRadius: "10px" }}
+              />
+            </div>
+          </div>
+          <div className="col-md-4"></div>
+
+          {EditWrokshop &&
+            EditWrokshop?.WorkshopImages?.map((Ele, index) => {
+              return (
+                <div className="col-md-2 m-1 m-auto mt-4">
+                  <img
+                    className="row p-0 m-0 rounded"
+                    height={100}
+                    width={150}
+                    src={`http://localhost:8002/Product/${Ele}`}
+                  />
+                </div>
+              );
+            })}
         </div>
 
         <div className="row mt-3">
           <div className="col-md-8 m-auto mt-3">
             <p className="d-flex m-auto sub_heading">
-              <span
-                className="cursor"
-                name="img"
-                onClick={() => setuTubeLink(false)}
-              >
-                Upload Images/
-              </span>
-              <span
-                className="me-2 cursor"
-                name="ulink"
-                onClick={() => setuTubeLink(true)}
-              >
-                Youtube Link
-              </span>
-              <div >
-                {uTubeLink ? (
-                  <Form.Control placeholder="Youtube link..."
-                    className="col-md-4 p-0" onChange={handleUploadYoutubeLink} type="text" />
-                ) : (
-                  <Form.Control
-                    className="col-md-4 p-0" onChange={handleImage} type="file" />
-                )}
+              <span className="cursor me-3">Youtube Link</span>
+              <div>
+                <Form.Control
+                  placeholder="YouTube link..."
+                  className="col-md-4 p-0"
+                  onChange={handleUploadYoutubeLink}
+                  type="text"
+                  value={inputValue}
+                />
               </div>
             </p>
-
-            <div className="session-image mt-3 p-2 text-center" >
+            <div className="session-image mt-3 p-2 text-center">
               {recentlyUploaded && (
-                recentlyUploaded.includes("youtube.com") ? (
+                <iframe
+                  width="350"
+                  height="215"
+                  src={recentlyUploaded}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              )}
+            </div>
+            <div className="row">
+              {YouTubeLink.map((Ele, index) => (
+                <div key={index} className="col-md-4 mt-3">
                   <iframe
-                    width="560"
-                    height="215"
-                    src={recentlyUploaded}
+                    width="100"
+                    height="100"
+                    src={Ele}
                     title="YouTube video player"
                     frameBorder="0"
+                    className="col-md-12 m-auto p-0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   ></iframe>
-                ) : (
-                  <img
-                    src={recentlyUploaded}
-                    alt="Uploaded"
-                    height={200}
-                    className="col-md-12 m-auto p-0"
-                    style={{ borderRadius: "10px" }}
-                  />
-                )
-              )}
+                </div>
+              ))}
             </div>
           </div>
           <div className="col-md-4"></div>
         </div>
+
         <div className="row text-center mt-5">
           <button
             className="col-md-2 p-1 submit m-auto shadow-sm"
-            onClick={handleAddImage}
+            onClick={handleLink}
           >
-            Upload Images
+            Upload Link
           </button>
         </div>
-
 
         <div className="row text-center mt-5">
           {EditWrokshop && idd ? (
@@ -750,25 +912,179 @@ export default function Workshop() {
               onClick={handleUpdate}
             >
               Update Workshop
-            </button>) :
+            </button>
+          ) : (
             <button
               className="col-md-2 p-1 submit m-auto shadow-sm"
               onClick={AddProduct}
             >
               Submit
-            </button>}
+            </button>
+          )}
         </div>
         <div className="row mt-5 m-auto">
-          <button className="col-md-2 m-auto p-2 session-btn">Preview</button>
-          <button className="col-md-2 m-auto p-2 session-btn" onClick={() => setLive(true)}>Make Live</button>
-          <button className="col-md-2 m-auto p-2 session-btn">Edit</button>
-          <button className="col-md-2 m-auto p-2 session-btn" onClick={() => setPause(true)}>Pause</button>
-          <button className="col-md-3 m-auto p-2 session-btn">
-            Duplicate & Edit
+          <button
+            className="col-md-2 m-auto p-2 session-btn"
+            onClick={handlePreview}
+          >
+            Preview
           </button>
-          <button className="col-md-2   mt-2 p-2 session-btn">Delete</button>
+          <button
+            className={` ${
+              !Live
+                ? " col-md-2 m-auto p-2 session-btn"
+                : "col-md-2 m-auto p-2 session-btn colorgreen"
+            }`}
+            onClick={() => setLive(true)}
+          >
+            {!Live ? "Make Live" : "Live"}
+          </button>
+          {/* <button className="col-md-2 m-auto p-2 session-btn">Edit</button> */}
+          <button
+            className="col-md-2 m-auto p-2 session-btn"
+            onClick={() => setLive(false)}
+          >
+            {!Live ? "Paused" : "Pause"}
+          </button>
+          <button
+            onClick={AddProduct}
+            disabled={!EditWrokshop}
+            className="col-md-3 m-auto p-2 session-btn"
+          >
+            Duplicate
+          </button>
+          <button
+            disabled={!EditWrokshop}
+            className="col-md-2   mt-2 p-2 session-btn"
+            onClick={() => deleteworkshop(EditWrokshop._id)}
+          >
+            Delete
+          </button>
         </div>
       </div>
+
+      <Modal show={showPreview} onHide={() => setShowPreview(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Workshop Preview</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Workshop Title:</strong> {WorkshopForm.workshopTitle}
+          </p>
+          <p>
+            <strong>Category:</strong>{" "}
+            {Category.find((c) => c._id === WorkshopForm.category)?.category}
+          </p>
+          <p>
+            <strong>Mode:</strong> {Mode?.mode?.online ? "Online" : ""}{" "}
+            {Mode?.mode?.offline ? "Offline" : ""}
+          </p>
+          <p>
+            <strong>City:</strong> {WorkshopForm?.city}
+          </p>
+          <p>
+            <strong>Sub Location:</strong> {WorkshopForm?.subLocation}
+          </p>
+          <p>
+            <strong>Session Address:</strong> {WorkshopForm?.sessionAddress}
+          </p>
+          <p>
+            <strong>Google Map Direction:</strong> {WorkshopForm?.gMapDirection}
+          </p>
+          <p>
+            <h4>WorkShop Slots</h4>
+          </p>
+          <p>
+            <strong>Session Type:</strong> {selectedSlots?.sessionType}
+          </p>
+          {selectedSlots?.slots &&
+            selectedSlots?.slots.map((slot, index) => (
+              <div key={index}>
+                <p>
+                  <h3>Slot:{index + 1}</h3>{" "}
+                </p>
+                <p>
+                  <strong>Date:</strong> {slot.Workshodate}
+                </p>
+                <p>
+                  <strong>Start Time:</strong> {slot.startTime}
+                </p>
+                <p>
+                  <strong>End Time:</strong> {slot.endTime}
+                </p>
+                <p>
+                  <strong>Duration:</strong> {slot.duration} mins
+                </p>
+              </div>
+            ))}
+          <p>
+            <strong>Language:</strong> {WorkshopForm?.language}
+          </p>
+          <p>
+            <strong>Minimum Age:</strong> {WorkshopForm?.minAge}
+          </p>
+          <p>
+            <strong>Description:</strong> {WorkshopForm?.description}
+          </p>
+          <p>
+            <strong>Workshop Fee Per Participant:</strong>{" "}
+            {WorkshopForm?.WFeePerParticipant}
+          </p>
+          <p>
+            <strong>Offer Price:</strong> {WorkshopForm?.OfferPrice}
+          </p>
+          <p>
+            <strong>Discount:</strong> {WorkshopForm?.discount}
+          </p>
+          <p>
+            <strong>Workshop Image:</strong>
+            <img
+              src={ViewImage}
+              alt="Uploaded"
+              height={200}
+              className="col-md-8 m-auto p-0"
+              style={{ borderRadius: "10px" }}
+            />
+          </p>
+
+          <div className="row">
+            <h4>Workshop Images & Videos</h4>
+            {YouTubeLink?.map((Ele, index) => {
+              return (
+                <div className="col-md-4 mt-3">
+                  {Ele.type === "YouTubeLink" ? (
+                    <iframe
+                      key={index}
+                      width="100"
+                      height="100"
+                      src={Ele.url}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      className="col-md-12 m-auto p-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <img
+                      key={index}
+                      src={Ele.url}
+                      alt="Uploaded"
+                      height={100}
+                      className="col-md-12 m-auto p-0"
+                      style={{ borderRadius: "10px" }}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowPreview(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

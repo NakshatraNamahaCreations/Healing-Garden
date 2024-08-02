@@ -15,7 +15,7 @@ export default function PrductView() {
     getProducts();
   }, []);
   const getProducts = async () => {
-    let Productdata = await http.get(`/product/getproductbyuser/${dataid?.id}`);
+    let Productdata = await http.get(`/product/getworkshopbyuser/${dataid?.id}`);
     console.log(Productdata.data.data, "ProductData");
     // setProductData(Productdata.data.data);
   };

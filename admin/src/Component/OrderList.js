@@ -115,33 +115,6 @@ export default function OrderList() {
       selector: (row, index) => row.OrderID,
     },
 
-    // {
-    //   name: "CATEGORY",
-    //   selector: (row) => {
-    //     const categoryObj = Category?.find(
-    //       (ele) => ele._id === row?.ProductData?.[0]?.CategoryId
-    //     );
-    //     return categoryObj ? categoryObj.category : "";
-    //   },
-    // },
-
-    // {
-    //   name: "PRODUCT NAME",
-    //   selector: (row) => row.ProductData?.[0].productname,
-    // },
-    // {
-    //   name: "PRODUCT IMAGE",
-
-    //   selector: (row) => (
-    //     <>
-    //       <img
-    //         width={50}
-    //         height={50}
-    //         src={`${ImageApiURL}/Product/${row?.Products?.[0].productimage}`}
-    //       />
-    //     </>
-    //   ),
-    // },
     {
       name: "ORDER TIME",
       selector: (row) =>

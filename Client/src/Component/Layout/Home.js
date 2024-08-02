@@ -23,7 +23,7 @@ export default function Home() {
   const [Proposal, setProposal] = useState(false);
   const getAllCategory = async () => {
     let response = await axios.get(
-      "https://api.healinggarden.co.in/api/category/getcategory"
+      "http://localhost:8002/api/category/getcategory"
     );
 
     setcategoryData(response.data.data);
@@ -36,15 +36,14 @@ export default function Home() {
             <Carousel.Item key={index}>
               {index === 0 && Ele.video ? (
                 <video
-                  className="d-block w-100"
+                  className="d-block w-100 carosel-img"
                   autoPlay
-                  height="100%"
                   src={Ele.video}
+                
                 />
               ) : (
                 <img
-                  className="d-block w-100"
-                  height="100%"
+                  className="d-block w-100 carosel-img"
                   src={`${Ele.img}`}
                   alt="banner"
                 />
@@ -65,12 +64,12 @@ export default function Home() {
         className="col-md-11 m-auto"
         style={{ color: "green", border: "1px solid #d2bca0" }}
       ></div>
-      <div className="row m-auto objective-main p-5 mt-5 text-center">
+      <div className="row m-auto objective-main p-5  mt-5 text-center">
         {Team.map((Ele) => {
           return (
             <div className="col-lg-3 col-md-4 col-sm-6 m-5 object-contianer p-0 ">
               <img className="p-0 m-0 object_img" height={200} src={Ele.img} />
-              <p className="categorytext p-3">{Ele.title}</p>
+              <p className="categorytext p-3 ">{Ele.title}</p>
             </div>
           );
         })}
@@ -78,14 +77,14 @@ export default function Home() {
 
       <div className="row m-auto text-center mt-5">
         <button
-          className="col-md-3 col-sm-8 col-7 mx-auto sub_heading request-pr p-3 shadow"
+          className="col-md-2 col-sm-7 col-7 mx-auto sub_heading request-pr p-md-2  shadow"
           onClick={() => setProposal(true)}
         >
           Request A Proposal
         </button>
       </div>
       <div className="row m-auto text-center mt-5">
-        <p className="main_heaidng fs-1 sourc">
+        <p className="main_heaidng  sourc">
           Let's create a personalized program for your team members!
         </p>
       </div>
@@ -112,7 +111,7 @@ export default function Home() {
                       className="row category_img p-2 m-auto"
                       height={100}
                       width={100}
-                      src={`https://api.healinggarden.co.in/Category/${Ele?.categoryImage}`}
+                      src={`http://localhost:8002/Category/${Ele?.categoryImage}`}
                     />
                     <p className="categorytext col-md-5 m-auto ">
                       {Ele.category}
@@ -263,11 +262,11 @@ export default function Home() {
         ></div>
 
         <div className="container">
-          <div className="row mt-2">
+          <div className="row m-auto mt-2">
             <p className="main_heaidng text-center">Popular Events</p>
           </div>
 
-          <div className="row row-cols-1 padd-main row-cols-md-2 g-5 mt-2">
+          <div className="row  m-auto row-cols-1 padd-main row-cols-md-2 g-5 mt-2">
             {PopularEvents.slice(0, 4).map((Ele, index) => {
               return (
                 <div

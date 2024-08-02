@@ -176,7 +176,7 @@ export default function Dashboard() {
   const getOrderList = async () => {
     try {
       const resp = await http.get("/category/getallcategory");
-      const resp1 = await http.get("/workshop/getallProduct");
+      const resp1 = await http.get("/workshop/getallworkshop");
       const resp2 = await http.get("/client/getallClient");
       let order = await http.get(`/order/getbyuser`);
       if (resp.status == 200) {

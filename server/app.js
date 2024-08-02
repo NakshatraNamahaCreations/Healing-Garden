@@ -34,6 +34,8 @@ const workshop = require("./Route/Product");
 const cart = require("./Route/AddtoCart");
 const Order = require("./Route/order");
 const Proposal = require("./Route/proposal");
+const Blog = require("./Route/blog");
+
 app.use("/api", Auth);
 app.use("/api/banner", Banner);
 app.use("/api/category", category);
@@ -42,6 +44,9 @@ app.use("/api/workshop", workshop);
 app.use("/api/cart", cart);
 app.use("/api/order", Order);
 app.use("/api/proposal", Proposal);
+app.use("/api/blog", Blog);
+
+//
 
 const PORT = process.env.PORT || 8002;
 app.listen(PORT, () => {

@@ -18,7 +18,7 @@ export default function Cart() {
   const getorderdata = async () => {
     try {
       const response = await axios.get(
-        "https://api.healinggarden.co.in/api/order/getallorder"
+        "http://localhost:8002/api/order/getallorder"
       );
       const date = new Date();
       setAllOrderData(response.data.data);
@@ -159,7 +159,7 @@ export default function Cart() {
                 <div className="row mt-5">
                   <div className="col-md-3">
                     <img
-                      src={`https://api.healinggarden.co.in/Product/${order?.OrderDetails?.item?.WorkshopImages?.[0]}`}
+                      src={`http://localhost:8002/Product/${order?.OrderDetails?.item?.WorkshopImages?.[0]}`}
                       className="row "
                       style={{ borderRadius: "15px" }}
                       height={120}

@@ -81,7 +81,7 @@ export default function About() {
               experiences, counselling & healing sessions.
             </p>
             <p className="sub_heading">
-              We have a network of 70+ artists, therapists and relevant service
+              We have a network of 70+ artists , therapists and relevant service
               providers with whom we carefully curate activities in following
               broad categories:
             </p>
@@ -322,7 +322,7 @@ export default function About() {
             {TeamMembers.map((Ele) => {
               return (
                 <div className="col-md-3  m-4 ">
-                  <img className="object_img" width={120} src={Ele.img} />
+                  <img className="object_img" width={80} src={Ele.img} />
                   <p className="team-name m-0">{Ele.name}</p>
                   <p className="team-position m-0 ">{Ele.position}</p>
                 </div>
@@ -376,8 +376,8 @@ export default function About() {
               <div className="row">
                 <p className="sub_heading textbold">Our Headquarter:</p>
                 <p className="sub_heading textbold">
-                  Our head quarter is located in Whitefeild,Bangalore,and we
-                  extend our services across Bangalore, Mumbai, Delhi NCR and
+                  Our head quarter is located in Whitefield, and Bangalore, and
+                  we extend our services across Bangalore, Mumbai, Delhi NCR and
                   Hyderabad.
                 </p>
               </div>

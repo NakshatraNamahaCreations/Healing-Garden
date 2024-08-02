@@ -56,7 +56,7 @@ export default function View() {
   const [OrderData, setOrderData] = useState([]);
   const getAllCategory = async () => {
     let response = await axios.get(
-      "https://api.healinggarden.co.in/api/category/getcategory"
+      "http://localhost:8002/api/category/getcategory"
     );
     let FilterData = response.data.data.find(
       (ele) => ele._id === data?.item?.category
@@ -65,14 +65,14 @@ export default function View() {
   };
   const getorderdata = async () => {
     let response = await axios.get(
-      "https://api.healinggarden.co.in/api/order/getallorder"
+      "http://localhost:8002/api/order/getallorder"
     );
     setOrderData(response.data.data);
   };
 
   const getAllWorkShop = async () => {
     let response = await axios.get(
-      "https://api.healinggarden.co.in/api/workshop/getallProduct"
+      "http://localhost:8002/api/workshop/getallworkshop"
     );
     setWorkshop(response.data.data);
   };
@@ -209,7 +209,7 @@ export default function View() {
       let orderId = generateOrderId("HG", OrderData);
 
       let config = {
-        url: "https://api.healinggarden.co.in/api/order/addorder",
+        url: "http://localhost:8002/api/order/addorder",
         method: "post",
         headers: { "Content-Type": "application/json" },
         data: {
@@ -237,7 +237,6 @@ export default function View() {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-  
   }, []);
   return (
     <>
@@ -254,13 +253,24 @@ export default function View() {
           <img
             className="row m-auto viewimg p-0"
             height={350}
-            src={`https://api.healinggarden.co.in/Product/${data?.item.WorkshopImages?.[0]}`}
+            src={`http://localhost:8002/Product/${data?.item.WorkshopImages?.[0]}`}
           />
           <div className="row m-auto mt-2">
             <div className="col-md-1"></div>
             <div className="col-md-8">
-              <div className="row">
-                <p className="sub_heading m-auto textbold ">Schedule</p>
+              <div className="row ">
+                <p className="col-md-3 sub_heading  textbold ">Schedule </p>{" "}
+                <span className="col-md-2">
+                  {" "}
+                  {workshopSlots.slots.length > 3 && (
+                    <a
+                      className="readmore cursor m-auto"
+                      onClick={() => setviewSlots(!viewSlots)}
+                    >
+                      {!viewSlots ? "More" : "Less"}
+                    </a>
+                  )}
+                </span>
                 <div className="row m-auto textbold inter ">
                   {workshopSlots?.sessionType === "One Session" &&
                     workshopSlots?.slots?.map((ele) =>
@@ -302,14 +312,7 @@ export default function View() {
               </div>
             </div>
           </div>
-          {workshopSlots.slots.length > 3 && (
-            <a
-              className="readmore cursor"
-              onClick={() => setviewSlots(!viewSlots)}
-            >
-              {!viewSlots ? "More" : "Less"}
-            </a>
-          )}
+
           <img
             className="viewsvg1"
             width={250}
@@ -419,7 +422,7 @@ export default function View() {
                     <img
                       className="col-md-12 p-0 m-0 indi_img"
                       height={150}
-                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`http://localhost:8002/Product/${Ele.WorkshopImages?.[0]}`}
                       // onClick={() => handleBook(Ele)}
                     />
                     <p className="individualtext p-2 m-0 text-center">
@@ -462,7 +465,7 @@ export default function View() {
                     <img
                       className="col-md-12 p-0 m-0 indi_img"
                       height={150}
-                      src={`https://api.healinggarden.co.in/Product/${Ele.WorkshopImages?.[0]}`}
+                      src={`http://localhost:8002/Product/${Ele.WorkshopImages?.[0]}`}
                       // onClick={() => handleBook(Ele)}
                     />
                     <p className="individualtext p-2 m-0 text-center">

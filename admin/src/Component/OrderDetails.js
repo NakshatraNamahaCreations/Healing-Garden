@@ -88,14 +88,14 @@ export default function OrderDetails() {
       let order = await http.get(`/order/getbyorderid/${userdata}`);
       let data = order.data.data;
       setOrderData(data);
-      let productdata = await http.get(`/product/getallProduct`);
+      let productdata = await http.get(`/workshop/getallworkshop`);
       setProduct(productdata.data.data);
       setProductsDetails(data.Products);
     } catch (error) {
       console.log("Error fetching category data", error);
     }
   };
-  console.log(OrderData, "OrderData");
+
   return (
     <div className="row m-auto">
       <div className="row shadow-none p-3 mt-5 bg-light rounded  m-auto">

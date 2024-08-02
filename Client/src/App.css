@@ -96,6 +96,19 @@
   font-style: normal;
   font-size: 25px;
 }
+.corporate-detal {
+  background-color: #a77a43;
+  border-radius: 20px;
+  color: white;
+}
+.request-corporat {
+  border: none;
+  background-color: #b1cf86;
+  color: #1c4935;
+  font-weight: bold;
+  border-radius: 30px;
+  font-size: 22px;
+}
 
 .objective-main {
   width: 100%;
@@ -120,6 +133,9 @@
   position: absolute;
   top: 0;
   right: 11%;
+}
+.carosel-img {
+  height: 80vh;
 }
 
 .filter-inner {
@@ -177,6 +193,7 @@
   border: none;
   border-radius: 30px;
   box-shadow: 0 0 10px #a77a43;
+  padding: 5px;
 }
 
 .sub_heading {
@@ -190,6 +207,10 @@
   border: 4px solid #a77a43;
   /* height: 200px; */
   margin: 10px !important;
+}
+.workshp-contianer {
+  border-radius: 20px;
+  border: 4px solid #a77a43;
 }
 
 .category_img {
@@ -208,6 +229,7 @@
   color: #a77a43;
   font-family: "Inter", sans-serif;
   font-weight: 500;
+  font-size: 14px;
 }
 
 .category-main {
@@ -255,6 +277,7 @@
   background-color: #a67a43;
   border-radius: 20px;
   font-size: 13px;
+  color: white;
 }
 
 .viewallclient {
@@ -264,6 +287,7 @@
   position: relative;
   z-index: 5;
   font-size: 13px;
+  color: white;
 }
 
 .categoryview {
@@ -287,9 +311,50 @@
   background-size: cover;
   padding: 50px;
 }
-
+.text-li,
+.nav-link {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  margin: auto;
+}
 .padd-main {
   padding: 50px;
+}
+
+.search-dropdon {
+  position: absolute;
+  left: 48%;
+  top: 75%;
+  background-color: white;
+  max-height: 300px;
+  min-height: 0px;
+  overflow-y: scroll;
+  border-radius: 5px;
+}
+.drop-down {
+  list-style-type: none;
+}
+.close_btn {
+  position: absolute;
+  top: 28%;
+  right: 10%;
+  color: rgba(26, 66, 244, 0.779);
+  font-size: 12px;
+}
+.drop-down:hover {
+  background-color: #50673b;
+  color: white;
+  cursor: pointer;
+}
+.search {
+  font-size: 12px !important;
+}
+.search-dropdon::-webkit-scrollbar {
+  width: 2px;
+}
+.position-re {
+  position: relative;
+  margin: auto;
 }
 .clients-main::before {
   content: "";
@@ -298,7 +363,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(252, 250, 247, 0.738);
+  background-color: rgba(248, 242, 242, 0.975);
   z-index: 1;
 }
 
@@ -426,26 +491,46 @@
 @media (max-width: 992px) {
   .about-grap {
     left: -10%;
-    height: 150px; /* Adjusted height for smaller screens */
-    width: 150px; /* Adjusted width for smaller screens */
+    height: 150px;
+    width: 150px;
   }
-
+  .text-li,
+  .position-re {
+    margin: 0%;
+  }
+  .search-dropdon {
+    left: 0%;
+    width: 200px;
+  }
+  .search {
+    width: 200px !important;
+    margin-bottom: 8px;
+  }
+  .main_heaidng {
+    font-size: 20px;
+  }
+  .sub_heading {
+    font-size: 15px;
+  }
+  .carosel-img {
+    height: 30vh;
+  }
   .about_svg1,
   .about_svg2 {
     top: -5%;
-    height: 150px; /* Adjusted height for smaller screens */
-    width: 150px; /* Adjusted width for smaller screens */
+    height: 150px;
+    width: 150px;
   }
 
   .about_svg4herat {
     bottom: -15%;
-    height: 75px; /* Adjusted height for smaller screens */
-    width: 75px; /* Adjusted width for smaller screens */
+    height: 75px;
+    width: 75px;
   }
 
   .aboutImg {
-    height: 150px; /* Adjusted height for smaller screens */
-    width: 150px; /* Adjusted width for smaller screens */
+    height: 150px;
+    width: 150px;
   }
 }
 
@@ -583,6 +668,7 @@
   list-style: none;
   text-decoration: none;
   color: black;
+  font-weight: bold !important;
 }
 
 .dropdown-item:active {
@@ -656,7 +742,7 @@
 }
 
 .main_heading {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -734,7 +820,8 @@
 
 .viewsvg1 {
   top: 75%;
-  z-index: -2;
+  /* z-index: -2; */
+  opacity: 0.1;
 }
 
 .viewsvg3 {
@@ -1025,7 +1112,7 @@
 }
 .viewimg {
   border-radius: 40px;
-  border: 4px solid #1c4935;
+  border: 4px solid #50673b;
   width: 100%;
 }
 
@@ -1163,13 +1250,18 @@
 .navbar-toggler-icon {
   color: white !important;
 }
-
+.text-li {
+  margin: auto;
+}
 @media (max-width: 768px) {
   .event_border {
     height: 140px;
     top: 10%;
     left: 14%;
     width: 70%;
+  }
+  .text-li {
+    margin: 0%;
   }
   .card-img-top {
     height: 180px;

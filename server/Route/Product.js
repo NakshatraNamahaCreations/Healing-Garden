@@ -18,15 +18,18 @@ router.post(
   upload.array("WorkshopImages", 10),
   WorkshopController.AddProduct
 );
-router.get("/getallProduct", WorkshopController.getAllProduct);
-router.get("/getProduct", WorkshopController.getSearchedProduct);
+router.get("/getallworkshop", WorkshopController.getAllProduct);
+router.get("/getworkshop", WorkshopController.getSearchedProduct);
 router.get("/getbyworkshopbyid/:id", WorkshopController.getByid);
-router.get("/getproductbyuser/:id", WorkshopController.getByUserid);
+router.get("/getworkshopbyuser/:id", WorkshopController.getByUserid);
 router.put(
-  "/editProduct/:id",
+  "/editworkshop/:id",
   upload.array("WorkshopImages", 10),
   WorkshopController.update
 );
 router.post("/trash/:id", WorkshopController.trash);
 router.get("/getbyuser", WorkshopController.GetDataWithClients);
+
+router.put("/makelive/:id", WorkshopController.updateLive);
+
 module.exports = router;

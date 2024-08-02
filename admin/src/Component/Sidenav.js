@@ -4,6 +4,7 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import { Link, useNavigation } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { ServicePage } from "../ServicePage";
+import { RiBloggerLine } from "react-icons/ri";
 
 function Sidenav() {
   const Logout = async () => {
@@ -83,12 +84,12 @@ function Sidenav() {
           >
             Order
           </MenuItem>
-          {/* <MenuItem
-            component={<Link className="M-link" to="/discount" />}
-            icon={<i className="pi pi-wallet"></i>}
+          <MenuItem
+            component={<Link className="M-link" to="/blog" />}
+            icon={<i class="fa-brands fa-blogger"></i>}
           >
-            Discount
-          </MenuItem> */}
+            Blog
+          </MenuItem>
           {/* <MenuItem
             component={<Link className="M-link" to="/DeliveryChallan" />}
             icon={<i className="pi pi-book"></i>}
